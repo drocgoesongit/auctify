@@ -1,4 +1,5 @@
 import 'package:auctify/const/constants.dart';
+import 'package:auctify/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,20 +9,32 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"),
-        ]),
+          bottomNavigationBar: BottomNavigationBar(items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"),
+          ]),
           body: SingleChildScrollView(
             child: Column(
               children: [
-                Container(width: double.infinity,child: Text("Keep calm and \nBid on!", style: kPageTitle,)),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductListScreen()));
+                    },
+                    child: Container(
+                        width: double.infinity,
+                        child: Text(
+                          "Keep calm and \nBid on!",
+                          style: kPageTitle,
+                        ))),
                 Container(
                   height: MediaQuery.of(context).size.height / 5,
                 ),
                 Text("Categories"),
                 Container(
-                  height: MediaQuery.of(context).size.height/6,
+                  height: MediaQuery.of(context).size.height / 6,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
@@ -43,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 Text("Trending right now"),
                 Container(
-                  height: MediaQuery.of(context).size.height/2,
+                  height: MediaQuery.of(context).size.height / 2,
                   child: ListView(
                       scrollDirection: Axis.horizontal,
                       physics: NeverScrollableScrollPhysics(),
