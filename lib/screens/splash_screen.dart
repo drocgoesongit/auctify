@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // logic to navigate to another screen after 2 seconds automatically.
   Future timer() {
-    final time = Future.delayed(Duration(seconds: 2), () {
+    final time = Future.delayed(Duration(seconds: 0), () {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => SigninScreen()));
     });

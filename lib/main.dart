@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final Future<FirebaseApp> _initialization = Firebase.initializeApp(
-      options: FirebaseOptions(
+      options: const FirebaseOptions(
     apiKey: "AIzaSyAO3hhwDFZ9mycWYEXFmJU7rS2gF2ZUdck",
     projectId: "auctify-f4102",
     storageBucket: "auctify-f4102.appspot.com",
@@ -33,10 +33,10 @@ class MyApp extends StatelessWidget {
         future: _initialization,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return SplashScreen();
+            return const SplashScreen();
           }
           if (snapshot.hasError) {
-            return Scaffold(
+            return const Scaffold(
               body: Center(
                 child: Text("Error"),
               ),
