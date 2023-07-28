@@ -14,7 +14,7 @@ const kAppbarTitle = TextStyle(
 );
 
 const kTextFormFieldBasic = TextStyle(
-  fontSize: 20.0,
+  fontSize: 16.0,
   fontFamily: "Poppins",
   color: Colors.black,
 );
