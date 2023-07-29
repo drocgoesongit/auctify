@@ -25,9 +25,11 @@ class HomeScreen extends StatelessWidget {
                     },
                     child: Container(
                         width: double.infinity,
-                        child: Text(
-                          "Keep calm and \nBid on!",
-                          style: kPageTitle,
+                        child: InkWell(
+                          child: Text(
+                            "Keep calm and \nBid on!",
+                            style: kPageTitle,
+                          ),
                         ))),
                 Container(
                   height: MediaQuery.of(context).size.height / 5,

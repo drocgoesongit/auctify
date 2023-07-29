@@ -1,6 +1,7 @@
 import 'package:auctify/const/constants.dart';
 import 'package:auctify/screens/Forgot_Password_Screen.dart';
 import 'package:auctify/screens/signup_screen.dart';
+import 'package:auctify/viewmodels/signin_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class SigninScreen extends StatefulWidget {
@@ -13,11 +14,14 @@ class SigninScreen extends StatefulWidget {
 class _SigninScreenState extends State<SigninScreen> {
   bool _isObscured = true;
   final _formkey = GlobalKey<FormState>();
+  String _email = "";
+  String _password = "";
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
           child: Form(
         key: _formkey,
         child: Column(
@@ -30,10 +34,9 @@ class _SigninScreenState extends State<SigninScreen> {
                 style: kPageTitle,
               ),
             ),
-            Expanded(
-              child: Container(
-                child: Image.asset("assets/images/signin.png"),
-              ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Image.asset("assets/images/signin.png"),
             ),
             Container(
                 width: double.infinity,
@@ -68,6 +71,11 @@ class _SigninScreenState extends State<SigninScreen> {
                     return "Please enter Email";
                   }
                   return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                    _email = value;
+                  });
                 },
               ),
             ),
@@ -117,6 +125,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   }
                   return null;
                 },
+                onChanged: (value) => _password = value,
               ),
             ),
             Padding(
@@ -131,10 +140,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 ),
                 onPressed: () {
                   if (_formkey.currentState!.validate()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SignUpScreen()));
+                    SignInBackend().loginWithEmail(_email, _password, context);
                   }
                 },
                 child: Text(

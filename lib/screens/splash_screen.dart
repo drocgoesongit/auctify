@@ -1,7 +1,7 @@
 import 'package:auctify/const/constants.dart';
 import 'package:auctify/screens/home_screen.dart';
 import 'package:auctify/screens/signin_screen.dart';
-import 'package:auctify/screens/signup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,9 +20,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   // logic to navigate to another screen after 2 seconds automatically.
   Future timer() {
-    final time = Future.delayed(Duration(seconds: 0), () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SigninScreen()));
+    final time = Future.delayed(Duration(seconds: 2), () {
+      if (FirebaseAuth.instance.currentUser != null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SigninScreen()));
+      }
     });
     return time;
   }

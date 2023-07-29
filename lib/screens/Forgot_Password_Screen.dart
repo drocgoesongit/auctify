@@ -1,4 +1,5 @@
 import 'package:auctify/screens/signin_screen.dart';
+import 'package:auctify/viewmodels/signin_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 import '../const/constants.dart';
@@ -12,10 +13,13 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final _formkey = GlobalKey<FormState>();
+  String _email = "";
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
           child: Form(
         key: _formkey,
         child: Column(
@@ -28,10 +32,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 style: kPageTitle,
               ),
             ),
-            Expanded(
-              child: Container(
-                child: Image.asset("assets/images/signin.png"),
-              ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Image.asset("assets/images/signin.png"),
             ),
             Container(
               margin: const EdgeInsets.only(top: 35.0),
@@ -84,6 +87,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   }
                   return null;
                 },
+                onChanged: (val) {
+                  setState(() {
+                    _email = val;
+                  });
+                },
               ),
             ),
             Padding(
@@ -98,10 +106,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 onPressed: () {
                   if (_formkey.currentState!.validate()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SigninScreen()));
+                    SignInBackend().resetPassword(context, _email);
                   }
                 },
                 child: Text(
