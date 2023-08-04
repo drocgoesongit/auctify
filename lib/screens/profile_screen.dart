@@ -1,3 +1,4 @@
+import 'package:auctify/admin_screens/add_product.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -7,8 +8,24 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-          child: Text(
-        "Profile Fragment",
+          child: Column(
+        children: [
+          Text(
+            "Profile Fragment",
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AddProductScreenAdmin()));
+            },
+            child: Text("Add Product"),
+          )
+        ],
       )),
     );
   }

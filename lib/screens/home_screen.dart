@@ -1,4 +1,3 @@
-import 'package:auctify/const/constants.dart';
 import 'package:auctify/screens/home_fragment.dart';
 import 'package:auctify/screens/product_list_screen.dart';
 import 'package:auctify/screens/profile_screen.dart';
@@ -34,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
             onDestinationSelected: onTapped,
             selectedIndex: _currentIndex,
-            destinations: [
+            destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.home),
                 label: 'Home',
