@@ -1,16 +1,21 @@
-# auctify
+# Auctify
 
-A new Flutter project.
+Auctify an E-commerce auctioning platform
 
-## Getting Started
+# Tech Stack
 
-This project is a starting point for a Flutter application.
+Flutter
+Dart
+Firebase
+Figma
 
-A few resources to get you started if this is your first Flutter project:
+# Features list
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Vintage, Retro and Aesthetics items categories for users to explore.
+2. Secure Sign in & sign up
+3. Trending tabs
+4. Detailed description pages for product active in bidding.
+5. Payment gateway Razorpay secure and fast.
+6. Dashboard UI for previous bids and active bids for each users.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#
