@@ -1,5 +1,7 @@
 import 'package:auctify/const/constants.dart';
+import 'package:auctify/screens/product_detail_screen.dart';
 import 'package:auctify/screens/product_list_screen.dart';
+import 'package:auctify/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -57,6 +59,36 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Text("Trending right now"),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductDetail()));
+                    },
+                    child: Container(
+                        width: double.infinity,
+                        child: InkWell(
+                          child: Text(
+                            "Product Detail page",
+                            style: kPageTitle,
+                          ),
+                        ))),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SigninScreen()));
+                    },
+                    child: Container(
+                        width: double.infinity,
+                        child: InkWell(
+                          child: Text(
+                            "Log Out",
+                            style: kPageTitle,
+                          ),
+                        ))),
                 Container(
                   height: MediaQuery.of(context).size.height / 2,
                   child: ListView(
