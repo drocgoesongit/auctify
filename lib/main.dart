@@ -1,6 +1,6 @@
-import 'package:auctify/screens/product_list_screen.dart';
+// import 'package:auctify/screens/product_list_screen.dart';
 import 'package:auctify/screens/splash_screen.dart';
-import 'package:auctify/screens/testing.dart';
+// import 'package:auctify/screens/testing.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 

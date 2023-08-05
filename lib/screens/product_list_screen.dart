@@ -1,4 +1,5 @@
 import 'package:auctify/const/constants.dart';
+import 'package:auctify/screens/product_detail_screen.dart';
 import 'package:auctify/utils/product_list_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class ProductListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Trending bids",
+          "Product list",
           style: kAppbarTitle,
         ),
         leading: GestureDetector(
@@ -20,7 +21,7 @@ class ProductListScreen extends StatelessWidget {
             Navigator.pop(context);
           },
           child: const Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios_new_rounded,
             color: Colors.black,
           ),
         ),
@@ -33,103 +34,149 @@ class ProductListScreen extends StatelessWidget {
             // search bar container
             Container(
               // i want container with 12 radius border on all sides
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               decoration: BoxDecoration(
                 color: secondaryAccentColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(children: [
                 const Icon(
-                  Icons.search,
+                  Icons.search_outlined,
                 ),
                 const SizedBox(
-                  width: 16,
+                  width: 12,
                 ),
-                Flexible(child: TextFormField()),
+                Flexible(
+                    child: TextFormField(
+                  decoration: InputDecoration(hintText: "search"),
+                )),
               ]),
             ),
 
             // filter part
             SizedBox(height: MediaQuery.of(context).size.height / 40),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(Icons.filter),
-                SizedBox(width: MediaQuery.of(context).size.height / 40),
-                Text("Filter")
-              ],
+            GestureDetector(
+              onTap: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.filter_list_rounded,
+                    color: primaryAccentColor,
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.height / 60),
+                  Text("Filter")
+                ],
+              ),
             ),
 
             // list of products
             SizedBox(height: MediaQuery.of(context).size.height / 80),
-            ListView(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-                ProductListTile(
-                    name: "Pearl",
-                    description: "xyz",
-                    price: "Infinite",
-                    time: 123,
-                    imageLink:
-                        "https://plus.unsplash.com/premium_photo-1669741908308-5ca216f3fcd1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80"),
-              ],
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProductDetail()));
+              },
+              child: ListView(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  ProductListTile(
+                      pname: "Pearl",
+                      price: "\$12K",
+                      time: "1:20:00",
+                      image: "assets/images/pearl.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Telephone",
+                      price: "\$13K",
+                      time: "1:20:00",
+                      image: "assets/images/image.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Magic Lamp",
+                      // description: "xyz",
+                      price: "\$20K",
+                      time: "1:20:00",
+                      image: "assets/images/lamp.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Old Coins",
+                      price: "\$3200",
+                      time: "1:20:00",
+                      image: "assets/images/coins.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Vintage Clock",
+                      price: "\$2K",
+                      time: "1:20:00",
+                      image: "assets/images/clock.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Christie’s Art",
+                      price: "\$500M",
+                      time: "1:20:00",
+                      image: "assets/images/art.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Pearl",
+                      price: "\$12K",
+                      time: "1:20:00",
+                      image: "assets/images/pearl.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Pearl",
+                      price: "\$12K",
+                      time: "1:20:00",
+                      image: "assets/images/pearl.png"),
+                  Container(
+                    // alignment: Alignment.centerRight,
+                    width: 350, // Set the desired width
+                    height: 2, // Set the desired height
+                    color: Colors.grey.shade400,
+                  ),
+                  ProductListTile(
+                      pname: "Pearl",
+                      price: "\$12K",
+                      time: "1:20:00",
+                      image: "assets/images/pearl.png"),
+                ],
+              ),
             )
           ]),
         ),

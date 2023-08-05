@@ -1,6 +1,6 @@
 import 'package:auctify/const/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 import '../utils/product_detail_tile.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -174,7 +174,12 @@ class ProductDetail extends StatelessWidget {
                           status: "winning",
                           time: "05m 45s ago",
                           profile: "assets/images/profile.png"),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        width: 350, // Set the desired width
+                        height: 2, // Set the desired height
+                        color: Colors.grey.shade400,
+                      ),
                       const PreviousBids(
                           name: "Lucas Murphy",
                           username: "@wong10",
@@ -182,7 +187,12 @@ class ProductDetail extends StatelessWidget {
                           status: "losing",
                           time: "07m 01s ago",
                           profile: "assets/images/profile.png"),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        width: 350, // Set the desired width
+                        height: 2, // Set the desired height
+                        color: Colors.grey.shade400,
+                      ),
                       const PreviousBids(
                           name: "Emma Wong",
                           username: "@wong10",
@@ -190,7 +200,12 @@ class ProductDetail extends StatelessWidget {
                           status: "losing",
                           time: "09m 41s ago",
                           profile: "assets/images/profile.png"),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        width: 350, // Set the desired width
+                        height: 2, // Set the desired height
+                        color: Colors.grey.shade400,
+                      ),
                       const PreviousBids(
                           name: "Jason Lee",
                           username: "@0307jason",
@@ -198,7 +213,12 @@ class ProductDetail extends StatelessWidget {
                           status: "losing",
                           time: "09m 50s ago",
                           profile: "assets/images/profile.png"),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        width: 350, // Set the desired width
+                        height: 2, // Set the desired height
+                        color: Colors.grey.shade400,
+                      ),
                       const PreviousBids(
                           name: "Rebecca Singh",
                           username: "@flying_ranger",
@@ -206,7 +226,12 @@ class ProductDetail extends StatelessWidget {
                           status: "losing",
                           time: "10m 30s ago",
                           profile: "assets/images/profile.png"),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        width: 350, // Set the desired width
+                        height: 2, // Set the desired height
+                        color: Colors.grey.shade400,
+                      ),
                       const PreviousBids(
                           name: "Gabriel Chen",
                           username: "@techwizard",
@@ -214,7 +239,12 @@ class ProductDetail extends StatelessWidget {
                           status: "outbid",
                           time: "11m 04s ago",
                           profile: "assets/images/profile.png"),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        width: 350, // Set the desired width
+                        height: 2, // Set the desired height
+                        color: Colors.grey.shade400,
+                      ),
                       const PreviousBids(
                           name: "Olivia Kim",
                           username: "@oliviaaaa",
@@ -222,55 +252,13 @@ class ProductDetail extends StatelessWidget {
                           status: "outbid",
                           time: "15m 34s ago",
                           profile: "assets/images/profile.png"),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      // const PreviousBids(
-                      //     name: "Lucas Murphy",
-                      //     username: "@wong10",
-                      //     bid: "\$1950",
-                      //     status: "losing",
-                      //     time: "07m 01s ago",
-                      //     profile: "assets/images/profile.png"),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      // const PreviousBids(
-                      //     name: "Lucas Murphy",
-                      //     username: "@wong10",
-                      //     bid: "\$1950",
-                      //     status: "losing",
-                      //     time: "07m 01s ago",
-                      //     profile: "assets/images/profile.png"),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      // const PreviousBids(
-                      //     name: "Lucas Murphy",
-                      //     username: "@wong10",
-                      //     bid: "\$1950",
-                      //     status: "losing",
-                      //     time: "07m 01s ago",
-                      //     profile: "assets/images/profile.png"),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      // const PreviousBids(
-                      //     name: "Lucas Murphy",
-                      //     username: "@wong10",
-                      //     bid: "\$1950",
-                      //     status: "losing",
-                      //     time: "07m 01s ago",
-                      //     profile: "assets/images/profile.png"),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      // const PreviousBids(
-                      //     name: "Lucas Murphy",
-                      //     username: "@wong10",
-                      //     bid: "\$1950",
-                      //     status: "outbid",
-                      //     time: "07m 01s ago",
-                      //     profile: "assets/images/profile.png"),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      // const PreviousBids(
-                      //     name: "Lucas Murphy",
-                      //     username: "@wong10",
-                      //     bid: "\$1950",
-                      //     status: "outbid",
-                      //     time: "07m 01s ago",
-                      //     profile: "assets/images/profile.png"),
-                      // SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        width: 350, // Set the desired width
+                        height: 2, // Set the desired height
+                        color: Colors.grey.shade400,
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
                     ],
                   )
                 ],
