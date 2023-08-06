@@ -2,7 +2,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:auctify/const/lists.dart';
+import 'package:auctify/models/product_model.dart';
+import 'package:auctify/viewmodels/upload_product_viewmodel.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddProductScreenAdmin extends StatefulWidget {
@@ -22,10 +25,11 @@ class _AddProductScreenAdminState extends State<AddProductScreenAdmin> {
   List<File> images = [];
   int initialPrice = 0;
   int incrementPercentage = 0;
-  int startTime = 0;
+  String startTime = "";
   String endTime = "";
   String endDate = "";
-  String status = "";
+  String startDate = "";
+  String status = "start";
 
   String? _setTime, _setDate;
   String? amPm;
@@ -108,6 +112,7 @@ class _AddProductScreenAdminState extends State<AddProductScreenAdmin> {
         List<File> files = result.paths.map((path) => File(path!)).toList();
         selectedImages.addAll(files);
       }
+      log("image added as files in add product screen length is ${selectedImages.length}");
     } catch (e) {
       print('Error picking multiple images: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -322,6 +327,12 @@ class _AddProductScreenAdminState extends State<AddProductScreenAdmin> {
                             );
                           } else {
                             _formKey.currentState!.save();
+                            uid = FirebaseAuth.instance.currentUser!.uid;
+                            DateTime timeNow = DateTime.now();
+                            startDate = timeNow.toString().substring(0, 11);
+                            startTime = timeNow.toString().substring(11, 19);
+                            List<String> categoriesList = [categories];
+
                             showDialog(
                                 context: (context),
                                 builder: (builder) {
@@ -337,7 +348,33 @@ class _AddProductScreenAdminState extends State<AddProductScreenAdmin> {
                                           child: const Text("No")),
                                       TextButton(
                                           onPressed: () {
+                                            log("${startDate}, ${startTime}");
+                                            log("${endTime.toString().substring(10, 15)}");
                                             Navigator.pop(context);
+                                            UploadProductViewModel()
+                                                .uploadProduct(
+                                              context,
+                                              ProductUploadModel(
+                                                  name: productName,
+                                                  id:
+                                                      "${productName.substring(0, 7).replaceAll(" ", "")}${timeNow.toString().substring(0, 7).replaceAll(" ", "")}",
+                                                  description: description,
+                                                  imageList: [],
+                                                  categories: categoriesList,
+                                                  sellerId: uid,
+                                                  status: status,
+                                                  endDate:
+                                                      endDate.substring(0, 11),
+                                                  endTime:
+                                                      endTime.substring(10, 15),
+                                                  startDate: startDate,
+                                                  startTime: startTime,
+                                                  startPrice: initialPrice,
+                                                  currentPrice: initialPrice,
+                                                  buyNowPrice: initialPrice * 2,
+                                                  increment: 20),
+                                              images,
+                                            );
                                           },
                                           child: const Text("Yes")),
                                     ],
