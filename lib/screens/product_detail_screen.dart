@@ -1,5 +1,6 @@
 import 'package:auctify/const/constants.dart';
 import 'package:auctify/models/product_model.dart';
+import 'package:auctify/screens/Place_Bid_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../utils/product_detail_tile.dart';
@@ -340,7 +341,12 @@ class ProductDetail extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PlaceBid()));
+                        },
                         child: const Text(
                           "Bid",
                           style: TextStyle(
