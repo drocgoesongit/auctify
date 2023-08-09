@@ -1,4 +1,3 @@
-import 'package:auctify/const/constants.dart';
 import 'package:auctify/screens/home_fragment.dart';
 import 'package:auctify/screens/product_list_screen.dart';
 import 'package:auctify/screens/profile_screen.dart';

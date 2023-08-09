@@ -1,6 +1,5 @@
-import 'package:auctify/screens/product_list_screen.dart';
+import 'package:auctify/screens/home_screen.dart';
 import 'package:auctify/screens/splash_screen.dart';
-import 'package:auctify/screens/testing.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        useMaterial3: true,
         fontFamily: "Poppins",
         primarySwatch: Colors.blue,
       ),
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         future: _initialization,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return const SplashScreen();
+            return const HomeScreen();
           }
           if (snapshot.hasError) {
             return const Scaffold(
