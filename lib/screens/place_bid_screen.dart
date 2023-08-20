@@ -1,10 +1,24 @@
+import 'package:auctify/const/util_functions.dart';
+import 'package:auctify/models/bid_model.dart';
+import 'package:auctify/models/product_model.dart';
+import 'package:auctify/viewmodels/bidding_viewmodel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../const/constants.dart';
+import '../models/product_model.dart';
 
-class PlaceBid extends StatelessWidget {
-  const PlaceBid({super.key});
+class PlaceBid extends StatefulWidget {
+  const PlaceBid({super.key, required this.productUploadModel});
+  final ProductUploadModel productUploadModel;
 
+  @override
+  State<PlaceBid> createState() => _PlaceBidState();
+}
+
+class _PlaceBidState extends State<PlaceBid> {
+  String bidAmount = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +45,15 @@ class PlaceBid extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 205,
-                  height: 198,
-                  child: Image.asset("assets/images/image.png"),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: SizedBox(
+                      width: 205,
+                      height: 198,
+                      child: Image.network(
+                        widget.productUploadModel.imageList[0],
+                        fit: BoxFit.cover,
+                      )),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment
@@ -43,15 +62,15 @@ class PlaceBid extends StatelessWidget {
                     Container(
                       // decoration: BoxDecoration(color: Colors.grey),
                       // alignment: Alignment.topRight,
-                      child: const Text(
-                        "Telephone",
+                      child: Text(
+                        widget.productUploadModel.name,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height / 20),
-                    const Text(
-                      "\$13K",
+                    Text(
+                      "\$${widget.productUploadModel.currentPrice}",
                       style:
                           TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
@@ -113,7 +132,7 @@ class PlaceBid extends StatelessWidget {
               alignment: Alignment.topLeft,
               padding: EdgeInsets.only(left: 20.0),
               child: Text(
-                "\$50",
+                "\$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w500,
@@ -166,11 +185,18 @@ class PlaceBid extends StatelessWidget {
                     ),
                   ),
                   child: TextField(
+                    keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: '\$50',
+                      hintText:
+                          '\$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}',
                       contentPadding: EdgeInsets.only(left: 10, bottom: 10),
                     ),
+                    onChanged: (val) {
+                      setState(() {
+                        bidAmount = val;
+                      });
+                    },
                   ),
                 ),
                 GestureDetector(
@@ -186,6 +212,9 @@ class PlaceBid extends StatelessWidget {
                 ),
               ],
             ),
+            SizedBox(height: MediaQuery.of(context).size.height / 25),
+            Text(
+                "The bid amount must be greater than the current bid amount: \$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}"),
             SizedBox(height: MediaQuery.of(context).size.height / 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +247,43 @@ class PlaceBid extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    int minAmount = widget.productUploadModel.currentPrice +
+                        widget.productUploadModel.increment;
+                    ;
+                    String bidId = generateRandomId();
+                    if (int.parse(bidAmount) > minAmount) {
+                      BidModel bidModel = BidModel(
+                        bidAmount: int.parse(bidAmount).toString(),
+                        productId: widget.productUploadModel.id,
+                        bidderId: FirebaseAuth.instance.currentUser!.uid,
+                        timeStamp: DateTime.now().toString(),
+                        bidStatus: "winning",
+                        bidId: bidId,
+                      );
+                      bool isBidPlaced =
+                          await BiddingBackend().placeBid(bidModel, context);
+                      if (isBidPlaced) {
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Bid amount should be greater than current bid amount. Or some error occured.",
+                            ),
+                          ),
+                        );
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            "Bid amount should be greater than current bid amount",
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   child: Text(
                     "Place bid",
                     style: TextStyle(

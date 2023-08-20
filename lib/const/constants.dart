@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 const backgroundColorShade1 = Color(0xFF86DEE0);
 const backgroundColorShade2 = Color(0xFF05595B);
 const primaryAccentColor = Color(0xFF05595B);

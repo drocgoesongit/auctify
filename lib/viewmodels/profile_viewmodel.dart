@@ -10,7 +10,8 @@ class ProfileViewModel {
     try {
       showDialog(
           context: context,
-          builder: (builder) => Center(child: CircularProgressIndicator()));
+          builder: (builder) =>
+              const Center(child: CircularProgressIndicator()));
 
       DocumentSnapshot snapshot = await FirebaseFirestore.instance
           .collection("users")
@@ -20,6 +21,7 @@ class ProfileViewModel {
       if (snapshot.exists) {
         UserLoginModel user =
             UserLoginModel.fromMap(snapshot.data() as Map<String, dynamic>);
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
         return user;
       } else {

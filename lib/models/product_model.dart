@@ -19,6 +19,7 @@ class ProductUploadModel {
   int currentPrice;
   int buyNowPrice;
   int increment;
+
   ProductUploadModel({
     required this.id,
     required this.name,

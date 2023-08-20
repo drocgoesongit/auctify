@@ -1,6 +1,12 @@
 import 'package:auctify/const/constants.dart';
+import 'package:auctify/const/util_functions.dart';
+import 'package:auctify/models/bid_model.dart';
 import 'package:auctify/models/product_model.dart';
+import 'package:auctify/models/user_login_model.dart';
 import 'package:auctify/screens/Place_Bid_Screen.dart';
+import 'package:auctify/viewmodels/bidding_viewmodel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../utils/product_detail_tile.dart';
@@ -9,6 +15,23 @@ class ProductDetail extends StatelessWidget {
   const ProductDetail({super.key, required this.product});
 
   final ProductUploadModel product;
+
+  Stream<List<BidModel>> getBidsStream(String productId) {
+    return FirebaseFirestore.instance
+        .collection('bids')
+        .where('productId', isEqualTo: productId)
+        .orderBy('bidAmount', descending: true)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => BidModel.fromJson(doc.data())).toList();
+    });
+  }
+
+  Future<UserLoginModel> getUserDetails(String userId) async {
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    return UserLoginModel.fromMap(userDoc.data()! as Map<String, dynamic>);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,18 +186,6 @@ class ProductDetail extends StatelessWidget {
                   )),
               SizedBox(height: MediaQuery.of(context).size.height / 80),
 
-              // const Text(
-              //   "Looking for a way to add some vintage charm to your home decor? Look no further than this antique desk telephone! While it may not be functional, it can still serve as an excellent home decor item. The sleek black color and metallic finish make it suitable for almost any type of interior decor.\n\n"
-              //   "This antique telephone measures 7' in height, 7.5' in diameter, and 9.3' in width, making it the perfect size to attract the attention of all visitors. And the best part? No assembly is required! Simply set it up on your desk and enjoy the classic beauty it brings to your home.\n"
-              //   "Don't miss your chance to own this unique piece of vintage decor. Bid now and make it yours!",
-              //   style: TextStyle(
-              //     fontFamily: "Poppins",
-              //     fontSize: 14,
-              //     fontWeight: FontWeight.w400,
-              //     color: Color(0xff000000),
-              //   ),
-              // ),
-
               // list of products
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Column(
@@ -193,103 +204,35 @@ class ProductDetail extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height / 40),
-                  ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      const PreviousBids(
-                          name: "Alex Jones",
-                          username: "@alexj0563",
-                          bid: "\$1300",
-                          status: "winning",
-                          time: "05m 45s ago",
-                          profile: "assets/images/profile.png"),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        width: 350, // Set the desired width
-                        height: 2, // Set the desired height
-                        color: Colors.grey.shade400,
-                      ),
-                      const PreviousBids(
-                          name: "Lucas Murphy",
-                          username: "@wong10",
-                          bid: "\$1950",
-                          status: "losing",
-                          time: "07m 01s ago",
-                          profile: "assets/images/profile.png"),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        width: 350, // Set the desired width
-                        height: 2, // Set the desired height
-                        color: Colors.grey.shade400,
-                      ),
-                      const PreviousBids(
-                          name: "Emma Wong",
-                          username: "@wong10",
-                          bid: "\$12800",
-                          status: "losing",
-                          time: "09m 41s ago",
-                          profile: "assets/images/profile.png"),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        width: 350, // Set the desired width
-                        height: 2, // Set the desired height
-                        color: Colors.grey.shade400,
-                      ),
-                      const PreviousBids(
-                          name: "Jason Lee",
-                          username: "@0307jason",
-                          bid: "\$12750",
-                          status: "losing",
-                          time: "09m 50s ago",
-                          profile: "assets/images/profile.png"),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        width: 350, // Set the desired width
-                        height: 2, // Set the desired height
-                        color: Colors.grey.shade400,
-                      ),
-                      const PreviousBids(
-                          name: "Rebecca Singh",
-                          username: "@flying_ranger",
-                          bid: "\$12400",
-                          status: "losing",
-                          time: "10m 30s ago",
-                          profile: "assets/images/profile.png"),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        width: 350, // Set the desired width
-                        height: 2, // Set the desired height
-                        color: Colors.grey.shade400,
-                      ),
-                      const PreviousBids(
-                          name: "Gabriel Chen",
-                          username: "@techwizard",
-                          bid: "\$12000",
-                          status: "outbid",
-                          time: "11m 04s ago",
-                          profile: "assets/images/profile.png"),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        width: 350, // Set the desired width
-                        height: 2, // Set the desired height
-                        color: Colors.grey.shade400,
-                      ),
-                      const PreviousBids(
-                          name: "Olivia Kim",
-                          username: "@oliviaaaa",
-                          bid: "\$11950",
-                          status: "outbid",
-                          time: "15m 34s ago",
-                          profile: "assets/images/profile.png"),
-                      Container(
-                        // alignment: Alignment.centerRight,
-                        width: 350, // Set the desired width
-                        height: 2, // Set the desired height
-                        color: Colors.grey.shade400,
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
-                    ],
+                  StreamBuilder<List<BidModel>>(
+                    stream: getBidsStream(product.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error'));
+                      } else if (snapshot.hasData) {
+                        List<BidModel> bidList = snapshot.data!;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: bidList.length,
+                          itemBuilder: (context, index) {
+                            BidModel bid = bidList[index];
+                            return PreviousBids(
+                                name: bid.bidderId,
+                                username: bid.bidderId,
+                                bid: bid.bidAmount,
+                                status: bid.bidStatus,
+                                time: bid.timeStamp,
+                                profile:
+                                    "https://images.unsplash.com/photo-1626301688449-1fa324d15bca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80");
+                          },
+                        );
+                      } else {
+                        return Center(child: Text('No data'));
+                      }
+                    },
                   )
                 ],
               ),
@@ -341,11 +284,32 @@ class ProductDetail extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PlaceBid()));
+                                  builder: (context) => PlaceBid(
+                                        productUploadModel: product,
+                                      )));
+
+                          // String uid = FirebaseAuth.instance.currentUser!.uid;
+                          // String bidId = FirebaseFirestore.instance
+                          //     .collection("bids")
+                          //     .doc()
+                          //     .id;
+                          // String timeStamp = DateTime.now().toString();
+                          // String bidAmount = "6000";
+                          // String bidStatus = "winner";
+                          // BidModel bidModel = BidModel(
+                          //     bidId: bidId,
+                          //     bidderId: uid,
+                          //     productId: product.id,
+                          //     timeStamp: timeStamp,
+                          //     bidAmount: bidAmount,
+                          //     bidStatus: bidStatus,
+                          //     );
+
+                          // BiddingBackend().placeBid(bidModel, context);
                         },
                         child: const Text(
                           "Bid",
