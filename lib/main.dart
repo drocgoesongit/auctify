@@ -1,3 +1,4 @@
+import 'package:auctify/screens/group_chat_detail_screen.dart';
 import 'package:auctify/screens/home_screen.dart';
 import 'package:auctify/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';

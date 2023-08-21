@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:auctify/screens/dashboard_screen.dart';
 import 'package:auctify/screens/settings_screen.dart';
 import 'package:auctify/screens/signin_screen.dart';
@@ -19,15 +17,19 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late String numberOfBidPlaced;
+  late UserLoginModel? userLoginModel;
 
   Future<UserLoginModel?> getUserInfo(BuildContext context) async {
-    UserLoginModel? userLoginModel =
-        await ProfileViewModel().getUserProfile(context);
-    numberOfBidPlaced = await FirebaseFirestore.instance
+    userLoginModel = await ProfileViewModel().getUserProfile(context);
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection("bids")
         .where("bidderId", isEqualTo: userLoginModel!.uid)
-        .count()
-        .toString();
+        .get();
+    if (userLoginModel == null) {
+    } else {
+      numberOfBidPlaced = snapshot.docs.length.toString();
+    }
+
     return userLoginModel;
   }
 
@@ -102,7 +104,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
                     child: Center(child: CircularProgressIndicator()));
-              } else if (snapshot.connectionState == ConnectionState.done) {
+              } else if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
                 return SingleChildScrollView(
                   padding:
                       EdgeInsets.all(MediaQuery.of(context).size.width / 20),

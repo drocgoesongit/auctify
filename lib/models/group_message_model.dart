@@ -3,7 +3,6 @@ class GroupMessageModel {
   final String senderId;
   final String senderName;
   final String senderImage;
-  final String message;
   final int timeStamp;
   final String content;
   final int type;
@@ -13,7 +12,6 @@ class GroupMessageModel {
     required this.senderId,
     required this.senderName,
     required this.senderImage,
-    required this.message,
     required this.timeStamp,
     required this.content,
     required this.type,
@@ -24,7 +22,6 @@ class GroupMessageModel {
     String? senderId,
     String? senderName,
     String? senderImage,
-    String? message,
     int? timeStamp,
     String? content,
     int? type,
@@ -34,7 +31,6 @@ class GroupMessageModel {
       senderId: senderId ?? this.senderId,
       senderName: senderName ?? this.senderName,
       senderImage: senderImage ?? this.senderImage,
-      message: message ?? this.message,
       timeStamp: timeStamp ?? this.timeStamp,
       content: content ?? this.content,
       type: type ?? this.type,
@@ -47,7 +43,6 @@ class GroupMessageModel {
       'senderId': senderId,
       'senderName': senderName,
       'senderImage': senderImage,
-      'message': message,
       'timeStamp': timeStamp,
       'content': content,
       'type': type,
@@ -60,7 +55,6 @@ class GroupMessageModel {
       senderId: map['senderId'],
       senderName: map['senderName'],
       senderImage: map['senderImage'],
-      message: map['message'],
       timeStamp: map['timeStamp'],
       content: map['content'],
       type: map['type'],

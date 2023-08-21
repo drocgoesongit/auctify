@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:auctify/const/constants.dart';
 import 'package:auctify/const/util_functions.dart';
 import 'package:auctify/models/bid_model.dart';
 import 'package:auctify/models/product_model.dart';
 import 'package:auctify/models/user_login_model.dart';
 import 'package:auctify/screens/Place_Bid_Screen.dart';
+import 'package:auctify/screens/group_chat_detail_screen.dart';
 import 'package:auctify/viewmodels/bidding_viewmodel.dart';
+import 'package:auctify/viewmodels/product_list_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -185,15 +189,45 @@ class ProductDetail extends StatelessWidget {
                     ),
                   )),
               SizedBox(height: MediaQuery.of(context).size.height / 80),
-
-              // list of products
+              FutureBuilder(
+                  future:
+                      ProductListViewModel().initiateChatPlusStatus(product.id),
+                  builder: ((context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error'));
+                    } else if (snapshot.hasData) {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GroupChatDetialScreen(
+                                      chatId: snapshot.data as String)));
+                        },
+                        child: const ListTile(
+                          leading: CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/profile.png")),
+                          title: Text(
+                            "Last chat username",
+                          ),
+                          subtitle: Text("click to start chatting."),
+                          trailing: Icon(Icons.chat_rounded),
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  })),
               SizedBox(height: MediaQuery.of(context).size.height / 100),
               Column(
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      "Previous bids",
+                      "Ongoing bids",
                       style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 20,

@@ -114,7 +114,7 @@ class PreviousBids extends StatelessWidget {
           //time
           Text(
             timeOfTheDay,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 10,
               color: Color(0xff545454),
             ),
