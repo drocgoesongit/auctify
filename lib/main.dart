@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         future: _initialization,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return const HomeScreen();
+            return const SplashScreen();
           }
           if (snapshot.hasError) {
             return const Scaffold(

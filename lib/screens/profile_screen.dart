@@ -2,6 +2,7 @@ import 'package:auctify/screens/dashboard_screen.dart';
 import 'package:auctify/screens/settings_screen.dart';
 import 'package:auctify/screens/signin_screen.dart';
 import 'package:auctify/viewmodels/profile_viewmodel.dart';
+import 'package:auctify/viewmodels/signin_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -214,10 +215,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(height: MediaQuery.of(context).size.height / 40),
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SigninScreen()));
+                            SignInBackend().logout(context);
                           },
                           child: buildMenuItem(Icons.logout_rounded, "Logout")),
                       SizedBox(height: MediaQuery.of(context).size.height / 40),
