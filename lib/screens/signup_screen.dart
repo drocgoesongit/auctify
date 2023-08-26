@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'package:auctify/const/constants.dart';
-// import 'package:auctify/models/user_login_model.dart';
-// import 'package:auctify/screens/home_screen.dart';
 import 'package:auctify/screens/signin_screen.dart';
 import 'package:auctify/viewmodels/signin_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _password = "";
   String _firstName = "";
   String _lastName = "";
+  String _confirmPassword = "";
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +47,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: SingleChildScrollView(
           child: Column(
             children: [
+              Container(
+                padding: EdgeInsets.only(top: 35.0),
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Image.asset("assets/images/login_new.png"),
+              ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.only(left: 20.0),
                 child: Container(
                   width: double.infinity,
                   child: const Text(
@@ -57,10 +61,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: kPageTitle,
                   ),
                 ),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Image.asset("assets/images/signup.png"),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,18 +71,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         Container(
                           alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.only(left: 30.0),
-                          child: const Text("First name"),
+                          padding: EdgeInsets.only(left: 28.0, top: 40.0),
+                          child: const Text(
+                            "First name",
+                            style: smallImportant,
+                          ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0, right: 10.0, top: 8.0, bottom: 8.0),
+                          padding: const EdgeInsets.only(left: 20.0, top: 8.0),
                           child: Container(
-                            height: 60,
+                            height: 50,
                             child: TextFormField(
                               style: kTextFormFieldBasic,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.account_circle_outlined),
                                 fillColor: secondaryAccentColor,
                                 filled: true,
                                 hintText: "First name",
@@ -91,14 +94,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     width: 1,
                                     color: Colors.black.withOpacity(0.3),
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     width: 1,
                                     color: Colors.black.withOpacity(0.3),
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
                               validator: (value) {
@@ -124,18 +127,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         Container(
                           alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.symmetric(horizontal: 30.0),
-                          child: const Text("Last name"),
+                          padding: EdgeInsets.only(left: 28.0, top: 40.0),
+                          child: const Text(
+                            "Last name",
+                            style: smallImportant,
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              right: 20.0, left: 10.0, bottom: 8.0, top: 8.0),
+                              right: 20.0, left: 10.0, top: 8.0),
                           child: Container(
-                            height: 60,
+                            height: 50,
                             child: TextFormField(
                               style: kTextFormFieldBasic,
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.account_circle_outlined),
                                 fillColor: secondaryAccentColor,
                                 filled: true,
                                 hintText: "Last name",
@@ -144,14 +151,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     width: 1,
                                     color: Colors.black.withOpacity(0.3),
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     width: 1,
                                     color: Colors.black.withOpacity(0.3),
                                   ),
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
                               validator: (value) {
@@ -175,11 +182,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: const Text("Email")),
+                  padding: const EdgeInsets.only(left: 28.0, top: 16.0),
+                  child: const Text(
+                    "Email",
+                    style: smallImportant,
+                  )),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 8.0),
                 child: TextFormField(
                   style: kTextFormFieldBasic,
                   keyboardType: TextInputType.emailAddress,
@@ -194,13 +204,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.black.withOpacity(0.3)), //<-- SEE HERE
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.black.withOpacity(0.3)), //<-- SEE HERE
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                   ),
                   validator: (value) {
@@ -218,11 +228,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: const Text("Password")),
+                  padding: const EdgeInsets.only(left: 28.0, top: 16.0),
+                  child: const Text(
+                    "Password",
+                    style: smallImportant,
+                  )),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 8.0),
                 child: TextFormField(
                   obscureText: _isObscured,
                   style: kTextFormFieldBasic,
@@ -230,29 +243,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   decoration: InputDecoration(
                     fillColor: secondaryAccentColor,
                     filled: true,
-                    prefixIcon: Icon(Icons.lock),
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.black,
+                    ),
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
                           _isObscured = !_isObscured;
                         });
                       },
-                      child: Icon(_isObscured
-                          ? Icons.visibility
-                          : Icons.visibility_off),
+                      child: Icon(
+                        _isObscured ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
                     ),
                     hintText: "Enter your password",
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.black.withOpacity(0.3)), //<-- SEE HERE
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                           width: 1,
                           color: Colors.black.withOpacity(0.3)), //<-- SEE HERE
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                   ),
                   validator: (value) {
@@ -270,20 +287,87 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
               ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 28.0, top: 16.0),
+                child: const Text(
+                  "Confirm Password",
+                  style: smallImportant,
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding:
+                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 8.0),
+                child: TextFormField(
+                  obscureText: _isObscured,
+                  style: kTextFormFieldBasic,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    fillColor: secondaryAccentColor,
+                    filled: true,
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.black,
+                    ),
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isObscured = !_isObscured;
+                        });
+                      },
+                      child: Icon(
+                        _isObscured ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                    ),
+                    hintText: "Confirm your password",
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 1,
+                        color: Colors.black.withOpacity(0.3),
+                      ),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please confirm your Password';
+                    } else if (value != _password) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      _confirmPassword = value;
+                    });
+                  },
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.only(left: 20.0, right: 20.0, top: 24.0),
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50.0),
+                    minimumSize: const Size(400.0, 50.0),
                     backgroundColor: primaryAccentColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
                   onPressed: () {
                     if (_formkey.currentState!.validate()) {
                       _formkey.currentState!.save();
-                      log("First name: $_firstName, Last name: $_lastName, Email: $_email, Password: $_password");
+                      log(
+                        "First name: $_firstName, Last name: $_lastName, Email: $_email, Password: $_password",
+                      );
                       SignInBackend().registerWithEmail(
                           _email, _password, _firstName, _lastName, context);
 
@@ -295,24 +379,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                   child: Text(
                     "Sign up",
-                    style: kAppbarTitle.copyWith(
-                        color: Colors.white, fontSize: 16.0),
+                    style: normalImportant.copyWith(color: Colors.white),
                   ),
                 ),
               ),
-              InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SigninScreen()));
-                  },
-                  child: const Text.rich(TextSpan(children: [
-                    TextSpan(text: "Already have an account, "),
-                    TextSpan(
-                        text: "Sign in",
-                        style: TextStyle(fontWeight: FontWeight.bold))
-                  ]))),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SigninScreen()));
+                    },
+                    child: const Text.rich(TextSpan(children: [
+                      TextSpan(
+                          text: "Already have an account, ",
+                          style: smallNormal),
+                      TextSpan(text: "Sign in", style: smallImportant)
+                    ]))),
+              ),
               const SizedBox(
                 height: 40.0,
               ),

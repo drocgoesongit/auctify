@@ -27,21 +27,25 @@ class _SigninScreenState extends State<SigninScreen> {
         child: Column(
           children: [
             Container(
+              padding: EdgeInsets.only(top: 35.0),
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Image.asset("assets/images/login_new.png"),
+            ),
+            Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 20.0),
               child: const Text(
-                "Welcome to \nAuctify",
+                "Welcome \nBack!",
                 style: kPageTitle,
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Image.asset("assets/images/signin.png"),
-            ),
-            Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: const Text("Email")),
+                padding: const EdgeInsets.only(left: 28.0, top: 40.0),
+                child: const Text(
+                  "Email",
+                  style: smallImportant,
+                )),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
@@ -51,7 +55,10 @@ class _SigninScreenState extends State<SigninScreen> {
                 decoration: InputDecoration(
                   fillColor: secondaryAccentColor,
                   filled: true,
-                  prefixIcon: Icon(Icons.email_rounded),
+                  prefixIcon: Icon(
+                    Icons.email_rounded,
+                    color: Colors.black,
+                  ),
                   hintText: "Enter your email",
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
@@ -81,8 +88,8 @@ class _SigninScreenState extends State<SigninScreen> {
             ),
             Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: const Text("Password")),
+                padding: const EdgeInsets.only(left: 28.0, top: 16.0),
+                child: const Text("Password", style: smallImportant)),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
@@ -93,11 +100,15 @@ class _SigninScreenState extends State<SigninScreen> {
                 decoration: InputDecoration(
                   fillColor: secondaryAccentColor,
                   filled: true,
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: Icon(
+                    Icons.lock,
+                    color: Colors.black,
+                  ),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       setState(() {
                         _isObscured = !_isObscured;
+                        Colors.black;
                       });
                     },
                     child: Icon(
@@ -129,13 +140,14 @@ class _SigninScreenState extends State<SigninScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:
+                  const EdgeInsets.only(left: 20.0, right: 20.0, top: 24.0),
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 50.0),
+                  minimumSize: const Size(400.0, 50.0),
                   backgroundColor: primaryAccentColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
                 onPressed: () {
@@ -145,8 +157,7 @@ class _SigninScreenState extends State<SigninScreen> {
                 },
                 child: Text(
                   "Sign in",
-                  style: kAppbarTitle.copyWith(
-                      color: Colors.white, fontSize: 16.0),
+                  style: normalImportant.copyWith(color: Colors.white),
                 ),
               ),
             ),
@@ -154,7 +165,7 @@ class _SigninScreenState extends State<SigninScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.only(left: 30.0, top: 10.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: GestureDetector(
@@ -165,15 +176,13 @@ class _SigninScreenState extends State<SigninScreen> {
                                   builder: (context) => SignUpScreen()));
                         },
                         child: const Text.rich(TextSpan(children: [
-                          TextSpan(text: "Not a Member? "),
-                          TextSpan(
-                              text: "Sign up",
-                              style: TextStyle(fontWeight: FontWeight.bold))
+                          TextSpan(text: "Not a Member? ", style: smallNormal),
+                          TextSpan(text: "Sign up", style: smallImportant)
                         ]))),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.only(right: 30.0, top: 10),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
@@ -185,8 +194,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         },
                         child: const Text.rich(TextSpan(children: [
                           TextSpan(
-                              text: "Forgot Password?",
-                              style: TextStyle(fontWeight: FontWeight.bold))
+                              text: "Forgot Password?", style: smallImportant)
                         ]))),
                   ),
                 ),

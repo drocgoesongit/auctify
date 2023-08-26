@@ -25,60 +25,63 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: Column(
           children: [
             Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Image.asset("assets/images/signin.png"),
+            ),
+            Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(left: 20.0),
               child: const Text(
                 "Welcome to \nAuctify",
                 style: kPageTitle,
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              child: Image.asset("assets/images/signin.png"),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 35.0),
+              margin: const EdgeInsets.only(top: 40.0),
               child: const Text(
                 "Forgot Password?",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                style: mediumTitle,
               ),
             ),
             Container(
-              padding: EdgeInsets.all(20),
+              alignment: Alignment.center,
+              padding: EdgeInsets.only(top: 8.0, left: 20.0, right: 20.0),
               child: const Text(
                 "Enter your email and we’ll send you a link to reset your password.",
-                style: TextStyle(fontSize: 14, color: Colors.black),
+                style: normalText,
               ),
             ),
             Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: const Text("Email")),
+                padding: const EdgeInsets.only(left: 28.0, top: 30),
+                child: const Text(
+                  "Email",
+                  style: smallImportant,
+                )),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 8.0),
               child: TextFormField(
                 style: kTextFormFieldBasic,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   fillColor: secondaryAccentColor,
                   filled: true,
-                  prefixIcon: Icon(Icons.email_rounded),
+                  prefixIcon: const Icon(
+                    Icons.email_rounded,
+                    color: Colors.black,
+                  ),
                   hintText: "Enter your email",
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                         width: 1,
                         color: Colors.black.withOpacity(0.3)), //<-- SEE HERE
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                         width: 1,
                         color: Colors.black.withOpacity(0.3)), //<-- SEE HERE
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
                 ),
                 validator: (value) {
@@ -95,13 +98,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding:
+                  const EdgeInsets.only(top: 32.0, right: 20.0, left: 20.0),
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 50.0),
+                  minimumSize: const Size(400.0, 50.0),
                   backgroundColor: primaryAccentColor,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(25.0),
                   ),
                 ),
                 onPressed: () {
@@ -111,26 +115,28 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 },
                 child: Text(
                   "Send Email",
-                  style: kAppbarTitle.copyWith(
-                      color: Colors.white, fontSize: 16.0),
+                  style: normalImportant.copyWith(color: Colors.white),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.only(top: 10.0),
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SigninScreen()));
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.arrow_back_ios_new_outlined),
-                    const Text(
+                    Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      size: 18,
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    Text(
                       "Back to Login",
-                      style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                      style: normalImportant,
                     ),
                   ],
                 ),

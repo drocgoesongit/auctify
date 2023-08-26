@@ -222,7 +222,7 @@ class _PlaceBidState extends State<PlaceBid> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(164, 50.0),
-                    backgroundColor: Color(0xFFE2D784),
+                    backgroundColor: secondaryAccentColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -242,7 +242,7 @@ class _PlaceBidState extends State<PlaceBid> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(164, 50.0),
-                    backgroundColor: Color(0xFF05595B),
+                    backgroundColor: primaryAccentColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),

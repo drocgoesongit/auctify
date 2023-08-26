@@ -36,95 +36,135 @@ class PreviousBids extends StatelessWidget {
     }
   }
 
+  Color getStatusBorderColor(String status) {
+    if (status == "winning") {
+      return Colors.green.shade700;
+    } else if (status == "second") {
+      return Colors.blue;
+    } else if (status == "third") {
+      return Colors.orange;
+    } else if (status == "outbid") {
+      return Colors.red;
+    } else if (status == "losing") {
+      return Colors.red;
+    } else {
+      return Colors.black;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String timeOfTheDay = getTimeInAMPMFormat(DateTime.parse(time));
-    return Column(children: [
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          //profile
-          SizedBox(
-            height: 50,
-          ),
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: NetworkImage(
-              profile,
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: getStatusBorderColor(
+                  status), // Define a function to get the color based on the status
+              width: 2.0, // Border width
             ),
+            borderRadius: BorderRadius.circular(8), // Border radius
           ),
-
-          //name column
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Profile
+              CircleAvatar(
+                radius: 20,
+                backgroundImage: NetworkImage(profile),
+              ),
+              // Name column
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Inter",
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    Text(
-                      username,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade400,
+                      Text(
+                        username,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: "Inter",
+                          color: Colors.grey.shade400,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
 
-          //bid & status
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: SizedBox(
-              width: 50,
-              // height: 10,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "\$$bid",
-                    style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+              // Bid & status
+              Container(
+                padding: EdgeInsets.only(top: 4),
+                width: 70,
+                child: Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "\$$bid",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: "Inter",
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          status,
+                          style: TextStyle(
+                            fontFamily: "Inter",
+                            color: getStatusColor(status),
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    status,
-                    style:
-                        TextStyle(color: getStatusColor(status), fontSize: 10),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
 
-          //time
-          Text(
-            timeOfTheDay,
-            style: const TextStyle(
-              fontSize: 10,
-              color: Color(0xff545454),
-            ),
-            textAlign: TextAlign.left,
+              // Time
+              Container(
+                padding: EdgeInsets.only(top: 12),
+                width: 50,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  timeOfTheDay,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontFamily: "Inter",
+                    color: Color(0xff545454),
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-      SizedBox(
-        height: 8.0,
-      ),
-    ]);
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+      ],
+    );
   }
 }

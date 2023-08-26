@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(
           text,
           style: const TextStyle(
-            fontFamily: "Poppins",
+            fontFamily: "Inter",
             fontSize: 30,
             fontWeight: FontWeight.w600,
             color: Color(0xff000000),
@@ -52,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(
           subtext,
           style: const TextStyle(
-            fontFamily: "Poppins",
+            fontFamily: "Inter",
             fontSize: 16,
             fontWeight: FontWeight.w500,
             color: Color(0xff000000),
@@ -133,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   minimumSize: const Size(164, 37.0),
-                                  backgroundColor: Color(0xFF05595B),
+                                  backgroundColor: primaryAccentColor,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),

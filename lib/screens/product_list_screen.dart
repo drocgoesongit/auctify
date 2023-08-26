@@ -34,10 +34,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
             SizedBox(height: MediaQuery.of(context).size.height / 40),
             // search bar container
             Container(
-              // i want container with 12 radius border on all sides
+              // i want container with 12 radius border on all sides'
+              // width: 350,
+              height: 50,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               decoration: BoxDecoration(
                 color: secondaryAccentColor,
+                border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(12),
               ),
 
@@ -51,7 +54,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 Flexible(
                     child: TextFormField(
                   decoration: InputDecoration(
-                      hintText: "search", border: InputBorder.none),
+                      hintText: "Search", border: InputBorder.none),
                 )),
               ]),
             ),
