@@ -1,16 +1,11 @@
-import 'dart:developer';
-
 import 'package:auctify/const/constants.dart';
-import 'package:auctify/const/util_functions.dart';
 import 'package:auctify/models/bid_model.dart';
 import 'package:auctify/models/product_model.dart';
 import 'package:auctify/models/user_login_model.dart';
 import 'package:auctify/screens/Place_Bid_Screen.dart';
 import 'package:auctify/screens/group_chat_detail_screen.dart';
-import 'package:auctify/viewmodels/bidding_viewmodel.dart';
 import 'package:auctify/viewmodels/product_list_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';

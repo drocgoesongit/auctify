@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auctify/const/constants.dart';
 import 'package:auctify/const/util_functions.dart';
 import 'package:auctify/models/group_message_model.dart';
 import 'package:auctify/models/user_login_model.dart';
@@ -86,7 +87,22 @@ class _GroupChatDetialScreenState extends State<GroupChatDetialScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Group chat')),
+      appBar: AppBar(
+        title: Text(
+          "Group Chat",
+          style: kAppbarTitle,
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height - 100,
         child: Column(children: [
@@ -111,14 +127,21 @@ class _GroupChatDetialScreenState extends State<GroupChatDetialScreen> {
                       GroupMessageModel message = messages[index];
                       String time = formatTimestampToAmPm(message.timeStamp);
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: ListTile(
                             leading: CircleAvatar(
                                 backgroundImage:
                                     AssetImage("assets/images/profile.png")),
-                            title: Text(message.content),
-                            subtitle: Text(message.senderName),
-                            trailing: Text(time)
+                            subtitle: Text(message.content,
+                                style: TextStyle(fontFamily: "Inter")),
+                            title: Text(message.senderName,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: "Inter")),
+                            trailing: Text(
+                              time,
+                              style: TextStyle(fontFamily: "Inter"),
+                            )
                             // You can display the sender's image and other information here
                             ),
                       );
@@ -133,41 +156,61 @@ class _GroupChatDetialScreenState extends State<GroupChatDetialScreen> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: TextFormField(
                     controller: _messageController,
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
-                      fillColor: Colors.grey,
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 12,
+                        horizontal: 16,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(
+                          color: Colors.black, // Border color
+                          width: 1, // Border width
+                        ),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                        borderSide: BorderSide(
+                          color: Colors.black, // Focused border color
+                          width: 1, // Border width
+                        ),
+                      ),
+                      hintText: 'Type a message...',
+                      hintStyle: TextStyle(fontFamily: "Inter"),
                     ),
-                    focusNode: _messageFocusNode, // Attach the FocusNode here
-
+                    focusNode: _messageFocusNode,
                     onChanged: (value) {
                       setState(() {
                         message = value;
                       });
                     },
-                    onFieldSubmitted: (value) {
-                      sendMessage(
-                          context); // Call the send function when Enter is pressed
-                      // Clear the input field after sending
-                    },
+                    maxLines: null,
+                    minLines: 1,
                   ),
                 ),
-                const SizedBox(
-                  width: 16,
-                ),
+                SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: () {
                     sendMessage(context);
                     _messageController.clear();
                   },
-                  child: Text('Send'),
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                    backgroundColor: Colors.black,
+                    padding: EdgeInsets.all(16),
+                  ),
+                  child: Icon(
+                    Icons.send_rounded,
+                    color: Colors.white,
+                    size: 25,
+                  ),
                 ),
               ],
             ),

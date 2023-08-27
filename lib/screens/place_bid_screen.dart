@@ -3,11 +3,9 @@ import 'package:auctify/models/bid_model.dart';
 import 'package:auctify/models/product_model.dart';
 import 'package:auctify/viewmodels/bidding_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../const/constants.dart';
-import '../models/product_model.dart';
 
 class PlaceBid extends StatefulWidget {
   const PlaceBid({super.key, required this.productUploadModel});

@@ -1,6 +1,5 @@
 import 'package:auctify/screens/dashboard_screen.dart';
 import 'package:auctify/screens/settings_screen.dart';
-import 'package:auctify/screens/signin_screen.dart';
 import 'package:auctify/viewmodels/profile_viewmodel.dart';
 import 'package:auctify/viewmodels/signin_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
