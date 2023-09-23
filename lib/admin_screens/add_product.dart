@@ -31,7 +31,6 @@ class _AddProductScreenAdminState extends State<AddProductScreenAdmin> {
   String startDate = "";
   String status = "start";
 
-  String? _setTime, _setDate;
   String? amPm;
 
   String? _hour, _minute, _time;

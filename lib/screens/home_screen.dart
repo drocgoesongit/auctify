@@ -1,4 +1,5 @@
 import 'package:auctify/screens/home_fragment.dart';
+import 'package:auctify/screens/product_list_active.dart';
 import 'package:auctify/screens/product_list_screen.dart';
 import 'package:auctify/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final listOfScreens = [
     HomeFragment(),
-    ProductListScreen(),
+    ProductListActiveDeactive(),
     ProfileScreen(),
   ];
 

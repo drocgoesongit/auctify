@@ -1,4 +1,5 @@
 import 'package:auctify/admin_screens/add_product.dart';
+import 'package:auctify/screens/portal_status_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -24,6 +25,18 @@ class ProfileScreen extends StatelessWidget {
                       builder: (context) => AddProductScreenAdmin()));
             },
             child: Text("Add Product"),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PortalStatusesScreen()));
+            },
+            child: Text("Manage portals"),
           )
         ],
       )),
