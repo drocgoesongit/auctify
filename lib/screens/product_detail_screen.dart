@@ -525,25 +525,6 @@ class _ProductDetailState extends State<ProductDetail> {
                                   builder: (context) => PlaceBid(
                                         productUploadModel: widget.product,
                                       )));
-
-                          // String uid = FirebaseAuth.instance.currentUser!.uid;
-                          // String bidId = FirebaseFirestore.instance
-                          //     .collection("bids")
-                          //     .doc()
-                          //     .id;
-                          // String timeStamp = DateTime.now().toString();
-                          // String bidAmount = "6000";
-                          // String bidStatus = "winner";
-                          // BidModel bidModel = BidModel(
-                          //     bidId: bidId,
-                          //     bidderId: uid,
-                          //     productId: product.id,
-                          //     timeStamp: timeStamp,
-                          //     bidAmount: bidAmount,
-                          //     bidStatus: bidStatus,
-                          //     );
-
-                          // BiddingBackend().placeBid(bidModel, context);
                         },
                         child: const Text(
                           "Bid",

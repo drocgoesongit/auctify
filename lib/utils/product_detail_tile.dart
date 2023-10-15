@@ -61,11 +61,10 @@ class PreviousBids extends StatelessWidget {
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
             border: Border.all(
-              color: getStatusBorderColor(
-                  status), // Define a function to get the color based on the status
-              width: 2.0, // Border width
+              color: getStatusBorderColor(status),
+              width: 2.0,
             ),
-            borderRadius: BorderRadius.circular(8), // Border radius
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,34 +111,29 @@ class PreviousBids extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: 4),
                 width: 70,
-                child: Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "\$$bid",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: "Inter",
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          status,
-                          style: TextStyle(
-                            fontFamily: "Inter",
-                            color: getStatusColor(status),
-                            fontSize: 10,
-                          ),
-                        ),
-                      ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "\$$bid",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: "Inter",
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
+                    Text(
+                      status,
+                      style: TextStyle(
+                        fontFamily: "Inter",
+                        color: getStatusColor(status),
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
                 ),
               ),
 

@@ -1,10 +1,46 @@
+import 'dart:developer';
+
 import 'package:auctify/const/constants.dart';
+import 'package:auctify/screens/accept_portal_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../utils/product_tile_home_screen.dart';
 
-class HomeFragment extends StatelessWidget {
+class HomeFragment extends StatefulWidget {
   const HomeFragment({super.key});
+
+  @override
+  State<HomeFragment> createState() => _HomeFragmentState();
+}
+
+class _HomeFragmentState extends State<HomeFragment> {
+  Future<List<String>> getPortalIfAny() async {
+    try {
+      List<String> portalIds = [];
+      QuerySnapshot portalsDocs = await FirebaseFirestore.instance
+          .collection("portal")
+          .where("portalStatus", isEqualTo: "started")
+          .where("portalCurrentWinner",
+              isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      if (portalsDocs.docs.isNotEmpty) {
+        for (DocumentSnapshot doc in portalsDocs.docs) {
+          Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+          portalIds.add(data!["portalId"]);
+        }
+        return portalIds;
+      } else {
+        log("got empty portal doc");
+        return ["none"];
+      }
+    } catch (e) {
+      print("error in getPortalIfAny: ${e.toString()}");
+      return ["none"];
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +55,35 @@ class HomeFragment extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            FutureBuilder(
+                future: getPortalIfAny(),
+                builder: ((context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data![0] == "none") {
+                      return Container();
+                    } else {
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AcceptPortalScreen(
+                                      portalId: snapshot.data![0])));
+                        },
+                        child: ListTile(
+                          mouseCursor: SystemMouseCursors.click,
+                          leading: Icon(Icons.emoji_events_outlined),
+                          title: Text("You are the winner of this portal."),
+                          subtitle: Text("Go to portal to claim the product."),
+                        ),
+                      );
+                    }
+                  } else {
+                    return Container();
+                  }
+                })),
             CarouselSlider(
               items: [
                 Container(
@@ -113,7 +178,7 @@ class HomeFragment extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.only(left: 8)),
                   CircleImageWithBorder(
-                    imageUrl: "assets/images/car.png",
+                    imageAsset: "assets/images/Mona_Lisa.png",
                     name: "Automobiles",
                   ),
                   Padding(padding: EdgeInsets.only(left: 8)),
@@ -123,7 +188,7 @@ class HomeFragment extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.only(left: 8)),
                   CircleImageWithBorder(
-                    imageUrl: "assets/images/real_estate.png",
+                    imageAsset: "assets/images/nike.png",
                     name: "Real Estates",
                   ),
                   Padding(padding: EdgeInsets.only(left: 8)),

@@ -1,5 +1,6 @@
 import 'package:auctify/screens/dashboard_screen.dart';
 import 'package:auctify/screens/settings_screen.dart';
+import 'package:auctify/screens/signin_screen.dart';
 import 'package:auctify/viewmodels/profile_viewmodel.dart';
 import 'package:auctify/viewmodels/signin_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,17 +21,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late UserLoginModel? userLoginModel;
 
   Future<UserLoginModel?> getUserInfo(BuildContext context) async {
-    userLoginModel = await ProfileViewModel().getUserProfile(context);
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("bids")
-        .where("bidderId", isEqualTo: userLoginModel!.uid)
-        .get();
-    if (userLoginModel == null) {
-    } else {
-      numberOfBidPlaced = snapshot.docs.length.toString();
-    }
+    try {
+      userLoginModel = await ProfileViewModel().getUserProfile(context);
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection("bids")
+          .where("bidderId", isEqualTo: userLoginModel!.uid)
+          .get();
+      if (userLoginModel == null) {
+        return UserLoginModel(
+            email: "error",
+            firstName: "error",
+            lastName: "error",
+            registerTime: "error",
+            uid: "error");
+      } else {
+        numberOfBidPlaced = snapshot.docs.length.toString();
+      }
 
-    return userLoginModel;
+      return userLoginModel;
+    } catch (e) {
+      return UserLoginModel(
+          email: "error",
+          firstName: "error",
+          lastName: "error",
+          registerTime: "error",
+          uid: "error");
+    }
   }
 
   Widget buildInfoRow(String text, String subtext) {
@@ -105,7 +121,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return Container(
                     child: Center(child: CircularProgressIndicator()));
               } else if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
+                  snapshot.hasData &&
+                  snapshot.data!.email != "error") {
                 return SingleChildScrollView(
                   padding:
                       EdgeInsets.all(MediaQuery.of(context).size.width / 20),
@@ -229,6 +246,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Icons.edit_outlined, "Edit profile")),
                     ],
                   ),
+                );
+              } else if (snapshot.data!.email == "error") {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SigninScreen()));
+                  },
+                  child: Center(
+                      child:
+                          Text("You are not logged in. Click here to login.")),
                 );
               } else {
                 return Center(child: Text("Error"));
