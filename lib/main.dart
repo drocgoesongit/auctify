@@ -1,5 +1,8 @@
 // import 'package:auctify/screens/group_chat_detail_screen.dart';
+import 'package:auctify/screens/OrderScreen.dart';
 import 'package:auctify/screens/home_screen.dart';
+import 'package:auctify/screens/splash_screen.dart';
+import 'package:auctify/screens/timeline_demo.dart';
 // import 'package:auctify/screens/product_detail_screen.dart';
 // import 'package:auctify/screens/product_list_screen.dart';
 // import 'package:auctify/screens/splash_screen.dart';
@@ -38,7 +41,7 @@ class MyApp extends StatelessWidget {
         future: _initialization,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return HomeScreen();
+            return SplashScreen();
           }
           if (snapshot.hasError) {
             return const Scaffold(

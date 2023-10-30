@@ -1,6 +1,7 @@
 import 'package:auctify/models/address_model.dart';
 import 'package:auctify/models/portal_model.dart';
 import 'package:auctify/models/product_model.dart';
+import 'package:auctify/screens/add_address_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -202,9 +203,17 @@ class CheckOutScreen extends StatelessWidget {
                         ),
                       ]);
                     } else {
-                      return Container(
-                        child: Center(
-                          child: Text("No address found."),
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddAddressScreen()));
+                        },
+                        child: Container(
+                          child: Center(
+                            child: Text("No address found."),
+                          ),
                         ),
                       );
                     }

@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.8.3
   google_sign_in: ^6.1.4
   carousel_slider: ^4.0.0
+  timeline_tile: 2.0.0
 
 dev_dependencies:
   flutter_test:

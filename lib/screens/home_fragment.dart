@@ -16,6 +16,7 @@ class HomeFragment extends StatefulWidget {
 }
 
 class _HomeFragmentState extends State<HomeFragment> {
+  late String productId;
   Future<List<String>> getPortalIfAny() async {
     try {
       List<String> portalIds = [];
@@ -30,6 +31,7 @@ class _HomeFragmentState extends State<HomeFragment> {
         for (DocumentSnapshot doc in portalsDocs.docs) {
           Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
           portalIds.add(data!["portalId"]);
+          productId = data!["productId"];
         }
         return portalIds;
       } else {
@@ -70,7 +72,9 @@ class _HomeFragmentState extends State<HomeFragment> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => AcceptPortalScreen(
-                                      portalId: snapshot.data![0])));
+                                        portalId: snapshot.data![0],
+                                        productId: productId,
+                                      )));
                         },
                         child: ListTile(
                           mouseCursor: SystemMouseCursors.click,
