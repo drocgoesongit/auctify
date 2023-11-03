@@ -37,26 +37,34 @@ class _ProductListScreenState extends State<ProductListScreen> {
               // i want container with 12 radius border on all sides'
               // width: 350,
               height: 50,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+
               decoration: BoxDecoration(
                 color: secondaryAccentColor,
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(12),
               ),
 
-              child: Row(children: [
-                const Icon(
-                  Icons.search_outlined,
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                Flexible(
-                    child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: "Search", border: InputBorder.none),
-                )),
-              ]),
+              child: Align(
+                alignment: Alignment.center,
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      const Icon(
+                        Icons.search_outlined,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                          child: TextFormField(
+                        decoration: InputDecoration(
+                            hintText: "Search", border: InputBorder.none),
+                      )),
+                    ]),
+              ),
             ),
 
             // filter part

@@ -1,19 +1,56 @@
+import 'dart:math';
+import 'package:auctify/const/util_functions.dart';
 import 'package:auctify/models/address_model.dart';
+import 'package:auctify/models/order_model.dart';
 import 'package:auctify/models/portal_model.dart';
 import 'package:auctify/models/product_model.dart';
 import 'package:auctify/screens/add_address_screen.dart';
+import 'package:auctify/screens/home_screen.dart';
+import 'package:auctify/viewmodels/payment_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
-class CheckOutScreen extends StatelessWidget {
+class CheckOutScreen extends StatefulWidget {
   CheckOutScreen(
       {super.key, required this.portalModel, required this.productModel});
 
   final ProductUploadModel productModel;
   final Portal portalModel;
 
+  @override
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
+}
+
+class _CheckOutScreenState extends State<CheckOutScreen> {
   List<AddressModel> addressList = [];
+  String amount = "100";
+
+  Razorpay _razorpay = Razorpay();
+  late String order_id;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _razorpay.clear();
+  }
+
+  int getRandom() {
+    Random random = Random();
+    int randomNumber = random.nextInt(10000);
+    return randomNumber; // from 0 upto 99 included
+  }
+
+  @override
+  initState() {
+    super.initState();
+
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
 
   Future<String> getAddresses() async {
     try {
@@ -194,6 +231,22 @@ class CheckOutScreen extends StatelessWidget {
                                 child: ElevatedButton(
                                   onPressed: () {
                                     // Code to be executed when the second button is pressed
+                                    var options = {
+                                      'key': 'rzp_test_uj5csPT8ukw8hI',
+                                      'amount': int.parse(amount) *
+                                          100, //in the smallest currency sub-unit.
+                                      'name': 'Billable',
+                                      'retry': {
+                                        'enabled': true,
+                                        'max_count': 2,
+                                      },
+                                      'send_sms_hash': true,
+                                      // 'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
+                                      'description': 'Complete order',
+                                      'timeout': 60, // in seconds
+                                    };
+
+                                    _razorpay.open(options);
                                   },
                                   child: Text('Pay Now'),
                                 ),
@@ -203,6 +256,10 @@ class CheckOutScreen extends StatelessWidget {
                         ),
                       ]);
                     } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddAddressScreen()));
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -227,5 +284,50 @@ class CheckOutScreen extends StatelessWidget {
                 }))
           ]),
         ));
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    OrderModel orderModel = OrderModel(
+        id: generateRandomId(),
+        productId: widget.productModel.id,
+        timeCreated: DateTime.now().millisecondsSinceEpoch.toString(),
+        status: "ordered",
+        address: addressList[0].toString(),
+        userId: FirebaseAuth.instance.currentUser!.uid,
+        amount: widget.portalModel.portalCurrentWinnerBidAmount,
+        paid: true,
+        expectedDelivery: DateTime.now()
+            .add(Duration(days: 5))
+            .millisecondsSinceEpoch
+            .toString());
+
+    String status = await PaymentViewModel()
+        .createOrderAndFinishPortal(widget.portalModel.portalId, orderModel);
+
+    if (status == "success") {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Payment successful."),
+        duration: Duration(milliseconds: 3000),
+      ));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Payment successful."),
+        duration: Duration(milliseconds: 3000),
+      ));
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Error: ${response.message}"),
+      duration: const Duration(milliseconds: 2000),
+    ));
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
   }
 }

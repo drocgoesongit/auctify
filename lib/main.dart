@@ -2,9 +2,6 @@
 import 'package:auctify/screens/OrderScreen.dart';
 import 'package:auctify/screens/home_screen.dart';
 import 'package:auctify/screens/splash_screen.dart';
-// import 'package:auctify/screens/product_detail_screen.dart';
-// import 'package:auctify/screens/product_list_screen.dart';
-// import 'package:auctify/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
