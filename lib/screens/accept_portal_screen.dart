@@ -120,14 +120,14 @@ class _AcceptPortalScreenState extends State<AcceptPortalScreen> {
                             SizedBox(
                               height: 20.0,
                             ),
-                            Text(
-                              "Portal details",
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
+                            // Text(
+                            //   "Portal details",
+                            // ),
+                            // SizedBox(
+                            //   height: 10.0,
+                            // ),
                             Container(
-                              padding: EdgeInsets.only(left: 20, right: 20),
+                              // padding: EdgeInsets.only(left: 20, right: 20),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -142,7 +142,7 @@ class _AcceptPortalScreenState extends State<AcceptPortalScreen> {
                                       ),
                                       // SizedBox(height: 6),
                                       Text(
-                                        "2nd",
+                                        "1st",
                                         style: normalImportant,
                                       ),
                                     ],
@@ -207,12 +207,14 @@ class _AcceptPortalScreenState extends State<AcceptPortalScreen> {
                                 )),
                             const SizedBox(height: 16),
                             Container(
-                              padding: EdgeInsets.only(left: 20, right: 20),
+                              // padding: EdgeInsets.only(left: 20, right: 20),
                               child: const Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Top Bids",
@@ -315,18 +317,20 @@ class _AcceptPortalScreenState extends State<AcceptPortalScreen> {
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(164, 50.0),
-                        backgroundColor: primaryAccentColor,
+                        backgroundColor: secondaryAccentColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: const Text(
                         "Cancel",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
                     ),

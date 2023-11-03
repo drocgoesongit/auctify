@@ -46,34 +46,49 @@ class _PlaceBidState extends State<PlaceBid> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: SizedBox(
-                      width: 205,
-                      height: 198,
+                      width: 180,
+                      height: 180,
                       child: Image.network(
                         widget.productUploadModel.imageList[0],
                         fit: BoxFit.cover,
                       )),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment
-                      .start, // Align children to the start (top) of the column
-                  children: [
-                    Container(
-                      // decoration: BoxDecoration(color: Colors.grey),
-                      // alignment: Alignment.topRight,
-                      child: Text(
-                        widget.productUploadModel.name,
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                SizedBox(
+                  width: 8,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment
+                        .start, // Align children to the start (top) of the column
+                    children: [
+                      Container(
+                        // decoration: BoxDecoration(color: Colors.grey),
+                        // alignment: Alignment.topRight,
+                        child: Text(
+                          widget.productUploadModel.name,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Inter"),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height / 20),
-                    Text(
-                      "\$${widget.productUploadModel.currentPrice}",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                    ),
-                    const Text("Current bid"),
-                  ],
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      Text(
+                        "\$${widget.productUploadModel.currentPrice}",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Inter"),
+                      ),
+                      const Text(
+                        "Current bid",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, fontFamily: "Inter"),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -93,7 +108,8 @@ class _PlaceBidState extends State<PlaceBid> {
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black),
+                    color: Colors.black,
+                    fontFamily: "Inter"),
               ),
             ),
             Container(
@@ -102,10 +118,10 @@ class _PlaceBidState extends State<PlaceBid> {
               child: Text(
                 "08:19:42 seconds",
                 style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xff575757),
-                ),
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xff575757),
+                    fontFamily: "Inter"),
               ),
             ),
             Padding(padding: EdgeInsets.all(10.0)),
@@ -123,6 +139,7 @@ class _PlaceBidState extends State<PlaceBid> {
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
+                    fontFamily: "Inter",
                     color: Colors.black),
               ),
             ),
@@ -134,6 +151,7 @@ class _PlaceBidState extends State<PlaceBid> {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w500,
+                  fontFamily: "Inter",
                   color: Color(0xff575757),
                 ),
               ),
@@ -153,6 +171,7 @@ class _PlaceBidState extends State<PlaceBid> {
                 style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
+                    fontFamily: "Inter",
                     color: Colors.black),
               ),
             ),
@@ -212,7 +231,9 @@ class _PlaceBidState extends State<PlaceBid> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height / 25),
             Text(
-                "The bid amount must be greater than the current bid amount: \$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}"),
+              "The bid amount must be greater than the current bid amount: \$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}",
+              style: TextStyle(fontFamily: "Inter"),
+            ),
             SizedBox(height: MediaQuery.of(context).size.height / 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -222,7 +243,7 @@ class _PlaceBidState extends State<PlaceBid> {
                     minimumSize: const Size(164, 50.0),
                     backgroundColor: secondaryAccentColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
                   onPressed: () {
@@ -233,6 +254,7 @@ class _PlaceBidState extends State<PlaceBid> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
+                      fontFamily: "Inter",
                       color: Colors.black,
                     ),
                   ),
@@ -242,7 +264,7 @@ class _PlaceBidState extends State<PlaceBid> {
                     minimumSize: const Size(164, 50.0),
                     backgroundColor: primaryAccentColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(25.0),
                     ),
                   ),
                   onPressed: () async {
@@ -287,6 +309,7 @@ class _PlaceBidState extends State<PlaceBid> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
+                      fontFamily: "Inter",
                       color: Colors.white,
                     ),
                   ),
