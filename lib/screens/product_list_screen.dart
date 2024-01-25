@@ -2,6 +2,7 @@ import 'package:auctify/const/constants.dart';
 import 'package:auctify/models/product_model.dart';
 import 'package:auctify/screens/product_detail_screen.dart';
 import 'package:auctify/utils/product_list_tile.dart';
+import 'package:auctify/utils/product_tile_home_screen.dart';
 import 'package:auctify/viewmodels/product_list_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -30,62 +31,312 @@ class _ProductListScreenState extends State<ProductListScreen> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
-          child: Column(children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: MediaQuery.of(context).size.height / 40),
-            // search bar container
+
             Container(
-              // i want container with 12 radius border on all sides'
-              // width: 350,
-              height: 50,
-
-              decoration: BoxDecoration(
-                color: secondaryAccentColor,
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(12),
-              ),
-
-              child: Align(
-                alignment: Alignment.center,
+              height: 40,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(),
                 child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      const Icon(
-                        Icons.search_outlined,
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Expanded(
-                          child: TextFormField(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: primaryAccentColor,
+                        )),
+                    Expanded(
+                      child: TextFormField(
+                        textAlign: TextAlign.start,
                         decoration: InputDecoration(
-                            hintText: "Search", border: InputBorder.none),
-                      )),
-                    ]),
+                            contentPadding:
+                                const EdgeInsets.symmetric(vertical: 10),
+                            hintText: "Search Auctify",
+                            hintStyle: normalText.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                            prefixIcon: const Icon(
+                              Icons.search_rounded,
+                              color: primaryAccentColor,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                  color: primaryAccentColor, width: 1),
+                            ),
+                            suffixIcon: const Icon(Icons.mic_rounded)),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.filter_list_rounded,
+                          color: primaryAccentColor,
+                        ))
+                  ],
+                ),
               ),
             ),
-
             // filter part
-            SizedBox(height: MediaQuery.of(context).size.height / 40),
-            GestureDetector(
-              onTap: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.filter_list_rounded,
-                    color: primaryAccentColor,
-                  ),
-                  SizedBox(width: MediaQuery.of(context).size.height / 60),
-                  Text("Filter")
-                ],
+            const SizedBox(
+              height: 20,
+            ),
+            //search suggestion
+            Container(
+              width: double.infinity,
+              child: Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Recent Searches",
+                      style: normalImportant,
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("Clock"),
+                        SearchSuggestionItem("gramphones"),
+                        SearchSuggestionItem("uniques"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("vintages"),
+                        SearchSuggestionItem("Exclusives"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text(
+                      "Trending Searches",
+                      style: normalImportant,
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("flora"),
+                        SearchSuggestionItem("Tucocoo Vintage Canvas"),
+                        SearchSuggestionItem("Notre"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("meganta flask"),
+                        SearchSuggestionItem("Antique metal flourish signs"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          // padding: EdgeInsets.all(20),
+                          child: const Text(
+                            "Popular Categories",
+                            style: normalImportant,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          child: const Text(
+                            "see all",
+                            style: smallNormal,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Sneakers",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/Mona_Lisa.png",
+                            name: "Automobiles",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/Mona_Lisa.png",
+                            name: "Art",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Real Estates",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Nike",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Nike",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-
+            const SizedBox(
+              height: 14,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            //search suggestion
+            Container(
+              width: double.infinity,
+              child: Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Recent Searches",
+                      style: normalImportant,
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("Clock"),
+                        SearchSuggestionItem("gramphones"),
+                        SearchSuggestionItem("uniques"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("vintages"),
+                        SearchSuggestionItem("Exclusives"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    const Text(
+                      "Trending Searches",
+                      style: normalImportant,
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("flora"),
+                        SearchSuggestionItem("Tucocoo Vintage Canvas"),
+                        SearchSuggestionItem("Notre"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Row(
+                      children: [
+                        SearchSuggestionItem("meganta flask"),
+                        SearchSuggestionItem("Antique metal flourish signs"),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          // padding: EdgeInsets.all(20),
+                          child: const Text(
+                            "Popular Categories",
+                            style: normalImportant,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          child: const Text(
+                            "see all",
+                            style: smallNormal,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Sneakers",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/Mona_Lisa.png",
+                            name: "Automobiles",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/Mona_Lisa.png",
+                            name: "Art",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Real Estates",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Nike",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          CircleImageWithBorder(
+                            imageAsset: "assets/images/nike.png",
+                            name: "Nike",
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 14,
+            ),
             // list of products
-            SizedBox(height: MediaQuery.of(context).size.height / 80),
+            SizedBox(height: MediaQuery.of(context).size.height / 20),
             FutureBuilder(
               future: getProductListFromBackend(context),
               builder: (context, snapshot) {
@@ -94,7 +345,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     List<ProductUploadModel> productList = snapshot.data!;
                     return ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: productList.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
@@ -116,10 +367,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                       },
                     );
                   } else {
-                    return Center(child: Text("No data found"));
+                    return const Center(child: Text("No data found"));
                   }
                 } else {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
               },
             )
@@ -128,4 +379,26 @@ class _ProductListScreenState extends State<ProductListScreen> {
       ),
     );
   }
+}
+
+SearchSuggestionItem(String text) {
+  return Container(
+    height: 24,
+    margin: const EdgeInsets.only(left: 8),
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 3),
+    decoration: BoxDecoration(
+      color: secondaryAccentColor,
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(
+        color: primaryAccentColor, // Outline color
+        width: 0.5, // Outline thickness
+      ),
+    ),
+    child: Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+      style: smallNormal.copyWith(color: primaryAccentColor),
+      textAlign: TextAlign.center,
+    ),
+  );
 }

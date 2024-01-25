@@ -9,6 +9,7 @@ const kPageTitle = TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold);
 
 const kAppbarTitle = TextStyle(
   fontSize: 24.0,
+  fontWeight: FontWeight.bold,
   fontFamily: "Inter",
   color: Colors.black,
 );

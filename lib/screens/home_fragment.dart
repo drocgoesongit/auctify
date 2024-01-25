@@ -2,6 +2,10 @@ import 'dart:developer';
 
 import 'package:auctify/const/constants.dart';
 import 'package:auctify/screens/accept_portal_screen.dart';
+import 'package:auctify/screens/track_order.dart';
+import 'package:auctify/screens/wishlist_screen.dart';
+import 'package:auctify/screens/track_order.dart';
+import 'package:auctify/screens/wishlist_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,236 +51,280 @@ class _HomeFragmentState extends State<HomeFragment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Auctify',
-          style: kAppbarTitle,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Auctify',
+                style: kAppbarTitle,
+              ),
+              Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Wishlist()));
+                      },
+                      child: Icon(Icons.favorite_border_rounded)),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Icon(Icons.notifications_none_rounded),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Icon(Icons.shopping_cart_outlined),
+                ],
+              ),
+            ],
+          ),
         ),
         backgroundColor: Colors.white,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            FutureBuilder(
-                future: getPortalIfAny(),
-                builder: ((context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.data![0] == "none") {
-                      return Container();
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              FutureBuilder(
+                  future: getPortalIfAny(),
+                  builder: ((context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.done) {
+                      if (snapshot.data![0] == "none") {
+                        return Container();
+                      } else {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AcceptPortalScreen(
+                                          portalId: snapshot.data![0],
+                                          productId: productId,
+                                        )));
+                          },
+                          child: const ListTile(
+                            mouseCursor: SystemMouseCursors.click,
+                            leading: Icon(Icons.emoji_events_outlined),
+                            title: Text("You are the winner of this portal."),
+                            subtitle:
+                                Text("Go to portal to claim the product."),
+                          ),
+                        );
+                      }
                     } else {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AcceptPortalScreen(
-                                        portalId: snapshot.data![0],
-                                        productId: productId,
-                                      )));
-                        },
-                        child: ListTile(
-                          mouseCursor: SystemMouseCursors.click,
-                          leading: Icon(Icons.emoji_events_outlined),
-                          title: Text("You are the winner of this portal."),
-                          subtitle: Text("Go to portal to claim the product."),
-                        ),
-                      );
+                      return Container();
                     }
-                  } else {
-                    return Container();
-                  }
-                })),
-            CarouselSlider(
-              items: [
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 0.5,
+                  })),
+              CarouselSlider(
+                items: [
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                            "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
-                      fit: BoxFit.cover,
-                    ),
+                    width: 350,
+                    height: 180,
                   ),
-                  width: 350,
-                  height: 180,
-                ),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 0.5,
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                            "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
-                      fit: BoxFit.cover,
-                    ),
+                    width: 350,
+                    height: 180,
                   ),
-                  width: 350,
-                  height: 180,
-                ),
-                Container(
-                  margin: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 0.5,
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 0.5,
+                      ),
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                            "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
-                      fit: BoxFit.cover,
-                    ),
+                    width: 350,
+                    height: 180,
                   ),
-                  width: 350,
-                  height: 180,
+                ],
+                options: CarouselOptions(
+                  enableInfiniteScroll: false,
+                  viewportFraction: 1,
+                  autoPlay: true,
+                  aspectRatio: 16 / 9,
+                  enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
                 ),
-              ],
-              options: CarouselOptions(
-                enableInfiniteScroll: false,
-                viewportFraction: 1,
-                autoPlay: true,
-                aspectRatio: 16 / 9,
-                enlargeCenterPage: true,
-                scrollDirection: Axis.horizontal,
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "Categories",
-                    style: normalImportant,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "see all",
-                    style: smallNormal,
-                  ),
-                ),
-              ],
-            ),
-            const SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TrackOrder()));
+                },
+                child: const Text("TrackOrder"),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TrackOrder()));
+                },
+                child: const Text("TrackOrder"),
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(padding: EdgeInsets.only(left: 20)),
-                  CircleImageWithBorder(
-                    imageAsset: "assets/images/nike.png",
-                    name: "Sneakers",
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: const Text(
+                      "Categories",
+                      style: normalImportant,
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 8)),
-                  CircleImageWithBorder(
-                    imageAsset: "assets/images/Mona_Lisa.png",
-                    name: "Automobiles",
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: const Text(
+                      "see all",
+                      style: smallNormal,
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 8)),
-                  CircleImageWithBorder(
-                    imageAsset: "assets/images/Mona_Lisa.png",
-                    name: "Art",
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 8)),
-                  CircleImageWithBorder(
-                    imageAsset: "assets/images/nike.png",
-                    name: "Real Estates",
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 8)),
-                  CircleImageWithBorder(
-                    imageAsset: "assets/images/nike.png",
-                    name: "Nike",
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 8)),
-                  CircleImageWithBorder(
-                    imageAsset: "assets/images/nike.png",
-                    name: "Nike",
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 8)),
-                  Padding(
-                      padding:
-                          EdgeInsets.only(right: 20)), // Add end padding of 20
                 ],
               ),
-            ),
-            // Padding(padding: EdgeInsets.all(8)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "Trending right now",
-                    style: normalImportant,
-                  ),
+              const SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 20)),
+                    CircleImageWithBorder(
+                      imageAsset: "assets/images/nike.png",
+                      name: "Sneakers",
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    CircleImageWithBorder(
+                      imageAsset: "assets/images/Mona_Lisa.png",
+                      name: "Automobiles",
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    CircleImageWithBorder(
+                      imageAsset: "assets/images/Mona_Lisa.png",
+                      name: "Art",
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    CircleImageWithBorder(
+                      imageAsset: "assets/images/nike.png",
+                      name: "Real Estates",
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    CircleImageWithBorder(
+                      imageAsset: "assets/images/nike.png",
+                      name: "Nike",
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    CircleImageWithBorder(
+                      imageAsset: "assets/images/nike.png",
+                      name: "Nike",
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 8)),
+                    Padding(
+                        padding: EdgeInsets.only(
+                            right: 20)), // Add end padding of 20
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    "see all",
-                    style: smallNormal,
-                  ),
-                ),
-              ],
-            ),
-            // Usage
-            const SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
+              ),
+              // Padding(padding: EdgeInsets.all(8)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(padding: EdgeInsets.only(left: 20)),
-                  ProductCard(
-                    imageAsset: "assets/images/clock.png",
-                    name: "Vinatge Clock",
-                    price: 2000,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: const Text(
+                      "Trending right now",
+                      style: normalImportant,
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 12)),
-                  ProductCard(
-                    imageAsset: "assets/images/coins.png",
-                    name: "Old Coins",
-                    price: 3200,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    child: const Text(
+                      "see all",
+                      style: smallNormal,
+                    ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 12)),
-                  ProductCard(
-                    imageAsset: "assets/images/nike.png",
-                    name: "Nike Shoes",
-                    price: 3211,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 12)),
-                  ProductCard(
-                    imageAsset: "assets/images/art.png",
-                    name: "Artwork",
-                    price: 1298,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
-                  ),
-                  Padding(padding: EdgeInsets.only(right: 20)),
                 ],
               ),
-            )
-          ],
-        ),
-      ),
-    );
+              // Usage
+              const SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    Padding(padding: EdgeInsets.only(left: 20)),
+                    ProductCard(
+                      imageAsset: "assets/images/clock.png",
+                      name: "Vinatge Clock",
+                      price: 2000,
+                      iconData: Icons
+                          .favorite_border_outlined, // Use any desired icon
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 12)),
+                    ProductCard(
+                      imageAsset: "assets/images/coins.png",
+                      name: "Old Coins",
+                      price: 3200,
+                      iconData: Icons
+                          .favorite_border_outlined, // Use any desired icon
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 12)),
+                    ProductCard(
+                      imageAsset: "assets/images/nike.png",
+                      name: "Nike Shoes",
+                      price: 3211,
+                      iconData: Icons
+                          .favorite_border_outlined, // Use any desired icon
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 12)),
+                    ProductCard(
+                      imageAsset: "assets/images/art.png",
+                      name: "Artwork",
+                      price: 1298,
+                      iconData: Icons
+                          .favorite_border_outlined, // Use any desired icon
+                    ),
+                    Padding(padding: EdgeInsets.only(right: 20)),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

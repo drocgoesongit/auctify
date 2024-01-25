@@ -19,9 +19,10 @@ class _PlaceBidState extends State<PlaceBid> {
   String bidAmount = "";
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Place a bid",
           style: kAppbarTitle,
         ),
@@ -43,17 +44,14 @@ class _PlaceBidState extends State<PlaceBid> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: SizedBox(
-                      width: 180,
-                      height: 180,
-                      child: Image.network(
-                        widget.productUploadModel.imageList[0],
-                        fit: BoxFit.cover,
-                      )),
-                ),
                 SizedBox(
+                    width: height * 0.2,
+                    height: height * 0.2,
+                    child: Image.network(
+                      widget.productUploadModel.imageList[0],
+                      // fit: BoxFit.cover,
+                    )),
+                const SizedBox(
                   width: 8,
                 ),
                 Expanded(
@@ -61,127 +59,184 @@ class _PlaceBidState extends State<PlaceBid> {
                     crossAxisAlignment: CrossAxisAlignment
                         .start, // Align children to the start (top) of the column
                     children: [
-                      Container(
-                        // decoration: BoxDecoration(color: Colors.grey),
-                        // alignment: Alignment.topRight,
-                        child: Text(
-                          widget.productUploadModel.name,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Inter"),
-                        ),
+                      Text(
+                        widget.productUploadModel.name,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Inter"),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      const SizedBox(height: 19),
+                      const Text("product seller username", style: smallNormal),
+                      const SizedBox(height: 8),
                       Text(
                         "\$${widget.productUploadModel.currentPrice}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: "Inter"),
+                        style: mediumTitle,
                       ),
                       const Text(
                         "Current bid",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontFamily: "Inter"),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: "Inter"),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            // SizedBox(height: MediaQuery.of(context).size.height / 80),
-            Padding(padding: EdgeInsets.all(10.0)),
-            Container(
-              width: 300, // Set the desired width
-              height: 2, // Set the desired height
-              color: Colors.grey.shade400,
+            const SizedBox(
+              height: 25,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 60),
             Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "Time remaining",
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    fontFamily: "Inter"),
+              // padding: EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Your position",
+                        style: smallNormal,
+                      ),
+                      // SizedBox(height: 6),
+                      Text(
+                        "1st",
+                        style: normalImportant,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Time Remaining",
+                        style: smallImportant,
+                      ),
+                      Text(
+                        "30:50:01", // Replace with your real-time value
+                        style: smallImportant.copyWith(color: Colors.red),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "08:19:42 seconds",
-                style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff575757),
-                    fontFamily: "Inter"),
-              ),
+            const SizedBox(
+              height: 20,
             ),
-            Padding(padding: EdgeInsets.all(10.0)),
-            Container(
-              width: 300, // Set the desired width
-              height: 2, // Set the desired height
-              color: Colors.grey.shade400,
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height / 60),
-            Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "Fixed bid increment",
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "Inter",
-                    color: Colors.black),
-              ),
-            ),
-            Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "\$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}",
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: "Inter",
-                  color: Color(0xff575757),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Initial Bid",
+                        style: smallNormal,
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        "\$ 90",
+                        style: mediumTitle,
+                      )
+                    ],
+                  ),
                 ),
-              ),
+                Container(
+                  width: 1, // Set the desired width
+                  height: 51, // Set the desired height
+                  color: Colors.grey.shade400,
+                ),
+                const Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        "Minimum bid increment",
+                        style: smallNormal,
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        "\$ 5",
+                        style: mediumTitle,
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Padding(padding: EdgeInsets.all(10.0)),
+            const SizedBox(
+              height: 15,
+            ),
             Container(
-              width: 300, // Set the desired width
-              height: 2, // Set the desired height
-              color: Colors.grey.shade400,
+                width: 350.0,
+                height: 70.0,
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade200,
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(
+                    color: Colors.blue, // Green border color
+                    width: 1.5, // Border width
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 16),
+                    ),
+                    Icon(Icons
+                        .info_outline_rounded), // Replace 'path_to_your_image' with the actual path to your image
+                    Padding(
+                      padding: EdgeInsets.only(left: 12),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(
+                            top: 8,
+                          )),
+                          Text(
+                            'The amount keeps updating all the time with new bids getting placed. So please make sure to quickly bid as if other person bids the same amount then you won’t be able to bid with that amount.',
+                            style: smallImportant,
+                            maxLines: 3,
+                            // softWrap: true,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )),
+            const Divider(
+              thickness: 2,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 60),
+            const SizedBox(
+              height: 4,
+            ),
             Container(
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "Select bid amount",
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: "Inter",
-                    color: Colors.black),
+              child: const Text(
+                "Bid Amount",
+                style: normalImportant,
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 60),
+            const SizedBox(height: 8),
             Row(
               children: [
                 GestureDetector(
                   onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 20.0),
                     child: Icon(
                       CupertinoIcons.minus_circle_fill,
                       color: primaryAccentColor,
@@ -189,9 +244,9 @@ class _PlaceBidState extends State<PlaceBid> {
                     ),
                   ),
                 ),
-                Padding(padding: EdgeInsets.only(left: 10)),
+                const Padding(padding: EdgeInsets.only(left: 10)),
                 Container(
-                  width: 120,
+                  width: 200,
                   height: 40,
                   decoration: BoxDecoration(
                     color: secondaryAccentColor,
@@ -207,7 +262,8 @@ class _PlaceBidState extends State<PlaceBid> {
                       border: InputBorder.none,
                       hintText:
                           '\$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}',
-                      contentPadding: EdgeInsets.only(left: 10, bottom: 10),
+                      contentPadding:
+                          const EdgeInsets.only(left: 10, bottom: 10),
                     ),
                     onChanged: (val) {
                       setState(() {
@@ -218,8 +274,8 @@ class _PlaceBidState extends State<PlaceBid> {
                 ),
                 GestureDetector(
                   onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 10.0),
                     child: Icon(
                       CupertinoIcons.add_circled_solid,
                       color: primaryAccentColor,
@@ -229,12 +285,7 @@ class _PlaceBidState extends State<PlaceBid> {
                 ),
               ],
             ),
-            SizedBox(height: MediaQuery.of(context).size.height / 25),
-            Text(
-              "The bid amount must be greater than the current bid amount: \$${widget.productUploadModel.currentPrice + widget.productUploadModel.startPrice * (widget.productUploadModel.increment * 0.01)}",
-              style: TextStyle(fontFamily: "Inter"),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height / 15),
+            SizedBox(height: MediaQuery.of(context).size.height / 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -249,7 +300,7 @@ class _PlaceBidState extends State<PlaceBid> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text(
+                  child: const Text(
                     "Cancel",
                     style: TextStyle(
                       fontSize: 15,
@@ -304,8 +355,8 @@ class _PlaceBidState extends State<PlaceBid> {
                       );
                     }
                   },
-                  child: Text(
-                    "Place bid",
+                  child: const Text(
+                    "Bid",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
