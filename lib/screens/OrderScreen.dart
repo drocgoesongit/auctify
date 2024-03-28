@@ -145,32 +145,32 @@ class MyOrders extends StatelessWidget {
                     imageAsset: "assets/images/clock.png",
                     name: "Vinatge Clock",
                     price: 2000,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
+                    iconData: Icons.favorite_border_outlined,
+                    uname: 'by Alex009', // Use any desired icon
                   ),
                   Padding(padding: EdgeInsets.only(left: 12)),
                   ProductCard(
                     imageAsset: "assets/images/coins.png",
                     name: "Old Coins",
                     price: 3200,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
+                    iconData: Icons.favorite_border_outlined,
+                    uname: 'by Alex009', // Use any desired icon
                   ),
                   Padding(padding: EdgeInsets.only(left: 12)),
                   ProductCard(
                     imageAsset: "assets/images/nike.png",
                     name: "Nike Shoes",
                     price: 3211,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
+                    iconData: Icons.favorite_border_outlined,
+                    uname: 'by Alex009', // Use any desired icon
                   ),
                   Padding(padding: EdgeInsets.only(left: 12)),
                   ProductCard(
                     imageAsset: "assets/images/art.png",
                     name: "Artwork",
                     price: 1298,
-                    iconData:
-                        Icons.favorite_border_outlined, // Use any desired icon
+                    iconData: Icons.favorite_border_outlined,
+                    uname: 'by Alex009', // Use any desired icon
                   ),
                   Padding(padding: EdgeInsets.only(right: 20)),
                 ],

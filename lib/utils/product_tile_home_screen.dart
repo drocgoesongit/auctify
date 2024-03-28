@@ -54,6 +54,7 @@ class CircleImageWithBorder extends StatelessWidget {
 class ProductCard extends StatefulWidget {
   final String imageAsset;
   final String name;
+  final String uname;
   final double price;
   final IconData iconData;
 
@@ -62,6 +63,7 @@ class ProductCard extends StatefulWidget {
     required this.name,
     required this.price,
     required this.iconData,
+    required this.uname,
   });
 
   @override
@@ -81,37 +83,39 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      elevation: 4,
+      surfaceTintColor: Colors.white,
+      elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(3),
-                image: DecorationImage(
-                  image: AssetImage(widget.imageAsset),
-                  fit: BoxFit.cover,
-                ),
+          Container(
+            width: 170,
+            height: 130,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              image: DecorationImage(
+                image: AssetImage(widget.imageAsset),
+                fit: BoxFit.cover,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 12),
+            padding: EdgeInsets.only(left: 8, top: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   widget.name,
-                  style: normalImportant,
+                  style: normalImportant.copyWith(fontSize: 18),
                 ),
-                SizedBox(height: 4),
+                Text(
+                  widget.uname,
+                  style: smallNormal.copyWith(color: Colors.grey),
+                ),
+                SizedBox(height: 12),
                 Row(
                   children: [
                     Column(
@@ -122,13 +126,13 @@ class _ProductCardState extends State<ProductCard> {
                         SizedBox(height: 12),
                       ],
                     ),
-                    Padding(padding: EdgeInsets.only(left: 30)),
+                    Padding(padding: EdgeInsets.only(left: 60)),
                     InkWell(
                       onTap: toggleIconState,
                       child: Icon(
                         isIconPressed ? Icons.favorite : widget.iconData,
-                        size: 20,
-                        color: isIconPressed ? Colors.red : Colors.black,
+                        size: 25,
+                        color: isIconPressed ? Colors.black : Colors.black,
                       ),
                     ),
                   ],

@@ -15,7 +15,7 @@ class GroupChatDetialScreen extends StatefulWidget {
   final String chatId;
 
   @override
-  State<GroupChatDetialScreen> createState() => _GroupChatDetialScreenState();
+  State<GroupChatDetialScreen> createState() => _GroupChatDetialScreenState();  
 }
 
 class _GroupChatDetialScreenState extends State<GroupChatDetialScreen> {

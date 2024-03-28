@@ -1,6 +1,8 @@
 import 'package:auctify/screens/home_fragment.dart';
 import 'package:auctify/screens/product_list_screen.dart';
 import 'package:auctify/screens/profile_screen.dart';
+import 'package:auctify/screens/track_order.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final listOfScreens = [
     HomeFragment(),
     ProductListScreen(),
+    TrackOrder(),
     ProfileScreen(),
   ];
 
@@ -29,19 +32,37 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-          bottomNavigationBar: NavigationBar(
-            labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-            onDestinationSelected: onTapped,
-            selectedIndex: _currentIndex,
-            destinations: [
-              NavigationDestination(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
-              NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
-            ],
-          ),
+          bottomNavigationBar: CurvedNavigationBar(
+              backgroundColor: Colors.transparent,
+              color: Colors.black,
+              height: 70,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+              items: const [
+                Icon(
+                  Icons.home,
+                  size: 30,
+                  color: Colors.white,
+                ),
+                Icon(
+                  Icons.search,
+                  size: 30,
+                  color: Colors.white,
+                ),
+                Icon(
+                  Icons.directions_bus_filled,
+                  size: 30,
+                  color: Colors.white,
+                ),
+                Icon(
+                  Icons.person,
+                  size: 30,
+                  color: Colors.white,
+                ),
+              ]),
           body: listOfScreens[_currentIndex]),
     );
   }

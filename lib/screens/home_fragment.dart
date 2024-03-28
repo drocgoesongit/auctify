@@ -1,9 +1,6 @@
 import 'dart:developer';
-
 import 'package:auctify/const/constants.dart';
 import 'package:auctify/screens/accept_portal_screen.dart';
-import 'package:auctify/screens/track_order.dart';
-import 'package:auctify/screens/wishlist_screen.dart';
 import 'package:auctify/screens/track_order.dart';
 import 'package:auctify/screens/wishlist_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -183,24 +180,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                   scrollDirection: Axis.horizontal,
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const TrackOrder()));
-                },
-                child: const Text("TrackOrder"),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const TrackOrder()));
-                },
-                child: const Text("TrackOrder"),
-              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -268,8 +248,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(20),
-                    child: const Text(
-                      "Trending right now",
+                    child: Text(
+                      "Trending right now 🔥",
                       style: normalImportant,
                     ),
                   ),
@@ -286,43 +266,44 @@ class _HomeFragmentState extends State<HomeFragment> {
               const SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(padding: EdgeInsets.only(left: 20)),
+                    Padding(padding: EdgeInsets.only(left: 18)),
                     ProductCard(
                       imageAsset: "assets/images/clock.png",
                       name: "Vinatge Clock",
                       price: 2000,
-                      iconData: Icons
-                          .favorite_border_outlined, // Use any desired icon
+                      iconData: Icons.favorite_border_outlined,
+                      uname: 'by Alex009', // Use any desired icon
                     ),
-                    Padding(padding: EdgeInsets.only(left: 12)),
+                    // Padding(padding: EdgeInsets.only(left: 12)),
                     ProductCard(
                       imageAsset: "assets/images/coins.png",
                       name: "Old Coins",
                       price: 3200,
-                      iconData: Icons
-                          .favorite_border_outlined, // Use any desired icon
+                      iconData: Icons.favorite_border_outlined,
+                      uname: 'by Alex009', // Use any desired icon
                     ),
-                    Padding(padding: EdgeInsets.only(left: 12)),
+                    // Padding(padding: EdgeInsets.only(left: 12)),
                     ProductCard(
                       imageAsset: "assets/images/nike.png",
                       name: "Nike Shoes",
                       price: 3211,
-                      iconData: Icons
-                          .favorite_border_outlined, // Use any desired icon
+                      iconData: Icons.favorite_border_outlined,
+                      uname: 'by Alex009', // Use any desired icon
                     ),
-                    Padding(padding: EdgeInsets.only(left: 12)),
+                    // Padding(padding: EdgeInsets.only(left: 12)),
                     ProductCard(
                       imageAsset: "assets/images/art.png",
                       name: "Artwork",
                       price: 1298,
-                      iconData: Icons
-                          .favorite_border_outlined, // Use any desired icon
+                      iconData: Icons.favorite_border_outlined,
+                      uname: 'by Alex009', // Use any desired icon
                     ),
-                    Padding(padding: EdgeInsets.only(right: 20)),
+                    Padding(padding: EdgeInsets.only(right: 18)),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ));
