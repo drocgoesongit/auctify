@@ -1,4 +1,5 @@
 import 'package:auctify/screens/dashboard_screen.dart';
+import 'package:auctify/screens/faqs_screen.dart';
 import 'package:auctify/screens/settings_screen.dart';
 import 'package:auctify/screens/signin_screen.dart';
 import 'package:auctify/viewmodels/profile_viewmodel.dart';
@@ -47,6 +48,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
           registerTime: "error",
           uid: "error");
     }
+  }
+
+  void showLogoutConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: Text('Are you sure you want to logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Call your backend logout function here
+                SignInBackend().logout(context);
+                // Example: AuthService.logout();
+                Navigator.of(context).pop(); // Close the dialog
+                // You can navigate to another screen after logout if needed
+                // Example: Navigator.pushReplacementNamed(context, '/login');
+              },
+              child: Text('Logout'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget buildInfoRow(String text, String subtext) {
@@ -209,11 +241,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height / 40),
                       GestureDetector(
-                          onTap: () {},
-                          child: buildMenuItem(
-                              Icons.edit_outlined, "Edit profile")),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
@@ -231,19 +258,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(height: MediaQuery.of(context).size.height / 40),
                       GestureDetector(
                           onTap: () {
-                            SignInBackend().logout(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FAQsScreen()));
+                          },
+                          child: buildMenuItem(
+                              CupertinoIcons.question_circle, "FAQs")),
+                      SizedBox(height: MediaQuery.of(context).size.height / 40),
+                      GestureDetector(
+                          onTap: () {
+                            showLogoutConfirmationDialog(context);
+                            // alert box to ask whether to confirm logout or not and then logout
                           },
                           child: buildMenuItem(Icons.logout_rounded, "Logout")),
                       SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      GestureDetector(
-                          onTap: () {},
-                          child: buildMenuItem(
-                              Icons.edit_outlined, "Edit profile")),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      GestureDetector(
-                          onTap: () {},
-                          child: buildMenuItem(
-                              Icons.edit_outlined, "Edit profile")),
                     ],
                   ),
                 );

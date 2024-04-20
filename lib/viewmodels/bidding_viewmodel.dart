@@ -26,8 +26,7 @@ class BiddingBackend {
       log("starting to place a bid");
       List<BidModel> bidList = await getAllBids(bidModel.productId, context);
       if (bidList.isNotEmpty) {
-        if (double.parse(bidModel.bidAmount) >
-            double.parse(bidList.first.bidAmount)) {
+        if (bidModel.bidAmount > bidList.first.bidAmount) {
           log("bid amount is higher than the last bid placed.");
           // uploading into bid root node.
           // uploading into product bids list.
@@ -41,7 +40,7 @@ class BiddingBackend {
           await _firestore
               .collection("products")
               .doc(bidModel.productId)
-              .update({"currentPrice": int.parse(bidModel.bidAmount)});
+              .update({"currentPrice": bidModel.bidAmount});
 
           await _firestore
               .collection("products")
@@ -68,7 +67,7 @@ class BiddingBackend {
         await _firestore
             .collection("products")
             .doc(bidModel.productId)
-            .update({"currentPrice": int.parse(bidModel.bidAmount)});
+            .update({"currentPrice": bidModel.bidAmount});
 
         await _firestore
             .collection("products")
@@ -107,7 +106,7 @@ class BiddingBackend {
           bidList.add(bidModel);
         }
       } else {
-        log("no bids found for product id-$productId");
+        log("No bids found for product id-$productId");
       }
 
       log("Bid list length for product id-$productId: ${bidList.length}");

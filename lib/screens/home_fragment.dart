@@ -1,8 +1,13 @@
 import 'dart:developer';
+import 'dart:js_interop';
 import 'package:auctify/const/constants.dart';
+import 'package:auctify/models/product_model.dart';
 import 'package:auctify/screens/accept_portal_screen.dart';
+import 'package:auctify/screens/product_detail_screen.dart';
 import 'package:auctify/screens/track_order.dart';
 import 'package:auctify/screens/wishlist_screen.dart';
+import 'package:auctify/utils/product_list_tile.dart';
+import 'package:auctify/viewmodels/product_list_viewmodel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,6 +49,10 @@ class _HomeFragmentState extends State<HomeFragment> {
       return ["none"];
     }
   }
+
+  Future<List<ProductUploadModel>> getProductListFromBackend(
+          BuildContext context) async =>
+      await ProductListViewModel().getProductList(context);
 
   @override
   Widget build(BuildContext context) {
@@ -262,48 +271,49 @@ class _HomeFragmentState extends State<HomeFragment> {
                   ),
                 ],
               ),
-              // Usage
-              const SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(padding: EdgeInsets.only(left: 18)),
-                    ProductCard(
-                      imageAsset: "assets/images/clock.png",
-                      name: "Vinatge Clock",
-                      price: 2000,
-                      iconData: Icons.favorite_border_outlined,
-                      uname: 'by Alex009', // Use any desired icon
-                    ),
-                    // Padding(padding: EdgeInsets.only(left: 12)),
-                    ProductCard(
-                      imageAsset: "assets/images/coins.png",
-                      name: "Old Coins",
-                      price: 3200,
-                      iconData: Icons.favorite_border_outlined,
-                      uname: 'by Alex009', // Use any desired icon
-                    ),
-                    // Padding(padding: EdgeInsets.only(left: 12)),
-                    ProductCard(
-                      imageAsset: "assets/images/nike.png",
-                      name: "Nike Shoes",
-                      price: 3211,
-                      iconData: Icons.favorite_border_outlined,
-                      uname: 'by Alex009', // Use any desired icon
-                    ),
-                    // Padding(padding: EdgeInsets.only(left: 12)),
-                    ProductCard(
-                      imageAsset: "assets/images/art.png",
-                      name: "Artwork",
-                      price: 1298,
-                      iconData: Icons.favorite_border_outlined,
-                      uname: 'by Alex009', // Use any desired icon
-                    ),
-                    Padding(padding: EdgeInsets.only(right: 18)),
-                  ],
-                ),
+              FutureBuilder(
+                future: getProductListFromBackend(context),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData && snapshot.data != false) {
+                      List<ProductUploadModel> productList = snapshot.data!;
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: productList.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProductDetail(
+                                              product: productList[index],
+                                            )));
+                              },
+                              child: ProductCard(
+                                imageAsset: productList[index].imageList[0],
+                                name: productList[index].name,
+                                price:
+                                    productList[index].currentPrice.toString(),
+                                iconData: Icons.favorite_border_outlined,
+                                uname: 'by Alex009', // Use any desired icon
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    } else {
+                      return const Center(child: Text("No data found"));
+                    }
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
               ),
+              // Usage
             ],
           ),
         ));

@@ -3,7 +3,7 @@ class BidModel {
   final String bidderId;
   final String productId;
   final String timeStamp;
-  final String bidAmount;
+  final int bidAmount; // Changed the type to int
   final String bidStatus;
 
   BidModel({

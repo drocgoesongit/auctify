@@ -325,7 +325,7 @@ class _PlaceBidState extends State<PlaceBid> {
                     String bidId = generateRandomId();
                     if (int.parse(bidAmount) > minAmount) {
                       BidModel bidModel = BidModel(
-                        bidAmount: int.parse(bidAmount).toString(),
+                        bidAmount: int.parse(bidAmount),
                         productId: widget.productUploadModel.id,
                         bidderId: FirebaseAuth.instance.currentUser!.uid,
                         timeStamp: DateTime.now().toString(),

@@ -144,7 +144,7 @@ class MyOrders extends StatelessWidget {
                   ProductCard(
                     imageAsset: "assets/images/clock.png",
                     name: "Vinatge Clock",
-                    price: 2000,
+                    price: "2000",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),
@@ -152,7 +152,7 @@ class MyOrders extends StatelessWidget {
                   ProductCard(
                     imageAsset: "assets/images/coins.png",
                     name: "Old Coins",
-                    price: 3200,
+                    price: "2000",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),
@@ -160,7 +160,7 @@ class MyOrders extends StatelessWidget {
                   ProductCard(
                     imageAsset: "assets/images/nike.png",
                     name: "Nike Shoes",
-                    price: 3211,
+                    price: "1000",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),
@@ -168,7 +168,7 @@ class MyOrders extends StatelessWidget {
                   ProductCard(
                     imageAsset: "assets/images/art.png",
                     name: "Artwork",
-                    price: 1298,
+                    price: "1200",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),

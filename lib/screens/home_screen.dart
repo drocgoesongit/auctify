@@ -24,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final listOfScreens = [
     HomeFragment(),
     ProductListScreen(),
-    TrackOrder(),
     ProfileScreen(),
   ];
 
@@ -52,11 +51,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 30,
                   color: Colors.white,
                 ),
-                Icon(
-                  Icons.directions_bus_filled,
-                  size: 30,
-                  color: Colors.white,
-                ),
+                // Icon(
+                //   Icons.directions_bus_filled,
+                //   size: 30,
+                //   color: Colors.white,
+                // ),
                 Icon(
                   Icons.person,
                   size: 30,

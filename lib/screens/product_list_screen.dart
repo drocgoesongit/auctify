@@ -42,14 +42,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 child: Row(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: primaryAccentColor,
-                        )),
                     Expanded(
                       child: TextFormField(
                         textAlign: TextAlign.start,
@@ -106,15 +98,15 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         SearchSuggestionItem("uniques"),
                       ],
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        SearchSuggestionItem("vintages"),
-                        SearchSuggestionItem("Exclusives"),
-                      ],
-                    ),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     SearchSuggestionItem("vintages"),
+                    //     SearchSuggestionItem("Exclusives"),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 24,
                     ),
@@ -132,74 +124,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         SearchSuggestionItem("Notre"),
                       ],
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Row(
-                      children: [
-                        SearchSuggestionItem("meganta flask"),
-                        SearchSuggestionItem("Antique metal flourish signs"),
-                      ],
-                    ),
+                    // const SizedBox(
+                    //   height: 8,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     SearchSuggestionItem("meganta flask"),
+                    //     SearchSuggestionItem("Antique metal flourish signs"),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 24,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          // padding: EdgeInsets.all(20),
-                          child: const Text(
-                            "Popular Categories",
-                            style: normalImportant,
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          child: const Text(
-                            "see all",
-                            style: smallNormal,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircleImageWithBorder(
-                            imageAsset: "assets/images/nike.png",
-                            name: "Sneakers",
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          CircleImageWithBorder(
-                            imageAsset: "assets/images/Mona_Lisa.png",
-                            name: "Automobiles",
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          CircleImageWithBorder(
-                            imageAsset: "assets/images/Mona_Lisa.png",
-                            name: "Art",
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          CircleImageWithBorder(
-                            imageAsset: "assets/images/nike.png",
-                            name: "Real Estates",
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          CircleImageWithBorder(
-                            imageAsset: "assets/images/nike.png",
-                            name: "Nike",
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          CircleImageWithBorder(
-                            imageAsset: "assets/images/nike.png",
-                            name: "Nike",
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                        ],
-                      ),
                     ),
                   ],
                 ),
@@ -209,7 +144,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
               height: 14,
             ),
             // list of products
-            SizedBox(height: MediaQuery.of(context).size.height / 20),
+
             FutureBuilder(
               future: getProductListFromBackend(context),
               builder: (context, snapshot) {

@@ -348,14 +348,14 @@ class _TrackOrderState extends State<TrackOrder> {
                   ProductCard(
                     imageAsset: "assets/images/clock.png",
                     name: "Vinatge Clock",
-                    price: 2000,
+                    price: "200",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),
                   ProductCard(
                     imageAsset: "assets/images/coins.png",
                     name: "Old Coins",
-                    price: 3200,
+                    price: "200",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),
@@ -363,7 +363,7 @@ class _TrackOrderState extends State<TrackOrder> {
                   ProductCard(
                     imageAsset: "assets/images/nike.png",
                     name: "Nike Shoes",
-                    price: 3211,
+                    price: "200",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),
@@ -371,7 +371,7 @@ class _TrackOrderState extends State<TrackOrder> {
                   ProductCard(
                     imageAsset: "assets/images/art.png",
                     name: "Artwork",
-                    price: 1298,
+                    price: "200",
                     iconData: Icons.favorite_border_outlined,
                     uname: 'by Alex009', // Use any desired icon
                   ),

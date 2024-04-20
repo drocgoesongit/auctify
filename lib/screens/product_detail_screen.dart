@@ -443,7 +443,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             return PreviousBids(
                                 name: bid.bidderId,
                                 username: bid.bidderId,
-                                bid: bid.bidAmount,
+                                bid: bid.bidAmount.toString(),
                                 status: bid.bidStatus,
                                 time: bid.timeStamp,
                                 profile:

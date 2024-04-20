@@ -55,7 +55,7 @@ class ProductCard extends StatefulWidget {
   final String imageAsset;
   final String name;
   final String uname;
-  final double price;
+  final String price;
   final IconData iconData;
 
   const ProductCard({
@@ -97,7 +97,9 @@ class _ProductCardState extends State<ProductCard> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(3),
               image: DecorationImage(
-                image: AssetImage(widget.imageAsset),
+                image: NetworkImage(
+                  widget.imageAsset,
+                ),
                 fit: BoxFit.cover,
               ),
             ),
