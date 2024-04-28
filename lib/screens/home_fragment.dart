@@ -194,7 +194,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                       },
                       child: CircleImageWithBorder(
                         imageAsset: "assets/images/nike.png",
-                        name: "Sneakers",
+                        name: "Designers",
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(left: 8)),
@@ -213,9 +213,19 @@ class _HomeFragmentState extends State<HomeFragment> {
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(left: 8)),
-                    CircleImageWithBorder(
-                      imageAsset: "assets/images/Mona_Lisa.png",
-                      name: "Art",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductListScreen(
+                                      category: "ArtWork",
+                                    )));
+                      },
+                      child: const CircleImageWithBorder(
+                        imageAsset: "assets/images/pearl.png",
+                        name: "Rare items",
+                      ),
                     ),
                     Padding(padding: EdgeInsets.only(left: 8)),
                     GestureDetector(
@@ -223,7 +233,7 @@ class _HomeFragmentState extends State<HomeFragment> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProductListScreen(
+                                builder: (context) => const ProductListScreen(
                                       category: "RealEstate",
                                     )));
                       },
@@ -232,7 +242,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                         name: "Real Estates",
                       ),
                     ),
-
                     Padding(padding: EdgeInsets.only(left: 8)),
                     GestureDetector(
                       onTap: () {
@@ -244,14 +253,13 @@ class _HomeFragmentState extends State<HomeFragment> {
                                     )));
                       },
                       child: CircleImageWithBorder(
-                        imageAsset: "assets/images/nike.png",
+                        imageAsset: "assets/images/coins.png",
                         name: "Nike",
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(left: 8)),
                     Padding(
-                        padding: EdgeInsets.only(
-                            right: 20)), // Add end padding of 20
+                        padding:
+                            EdgeInsets.only(left: 8)), // Add end padding of 20
                   ],
                 ),
               ),

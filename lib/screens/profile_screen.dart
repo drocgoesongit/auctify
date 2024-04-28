@@ -241,16 +241,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       SizedBox(height: MediaQuery.of(context).size.height / 40),
                       GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Dashboard()));
-                          },
-                          child: buildMenuItem(
-                              Icons.dashboard_outlined, "Dashboard")),
-                      SizedBox(height: MediaQuery.of(context).size.height / 40),
-                      GestureDetector(
                           onTap: () {},
                           child: buildMenuItem(
                               CupertinoIcons.exclamationmark_circle,
