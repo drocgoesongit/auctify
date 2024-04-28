@@ -1,11 +1,16 @@
+import 'dart:async';
+import 'dart:developer';
 import 'package:auctify/const/constants.dart';
+import 'package:auctify/const/util_functions.dart';
 import 'package:auctify/models/bid_model.dart';
 import 'package:auctify/models/product_model.dart';
 import 'package:auctify/models/user_login_model.dart';
 import 'package:auctify/screens/Place_Bid_Screen.dart';
 import 'package:auctify/screens/group_chat_detail_screen.dart';
+import 'package:auctify/utils/ticker_down.dart';
 import 'package:auctify/viewmodels/product_list_viewmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -22,6 +27,42 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail> {
   bool isInWishlist = false;
+  bool ended = false;
+  late Timer _timer;
+
+  late Duration _remainingTime;
+  Future<bool> isWishlisted() async {
+    try {
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      log("Checking if product is wishlisted for user: $userId");
+
+      // Get the wishlist document for the user
+      DocumentSnapshot wishlistSnapshot = await FirebaseFirestore.instance
+          .collection("wishlist")
+          .doc(userId)
+          .get();
+
+      if (wishlistSnapshot.exists) {
+        var wishlistData = wishlistSnapshot.data();
+        if (wishlistData != null && wishlistData is Map<String, dynamic>) {
+          List<String>? productIds = wishlistData['productIds']?.cast<String>();
+          if (productIds != null) {
+            isInWishlist = productIds.contains(widget.product.id);
+            log("Product is ${isInWishlist ? '' : 'not '}in wishlist");
+            return isInWishlist;
+          }
+        }
+      } else {
+        isInWishlist = false;
+        log("Wishlist document does not exist for user: $userId");
+      }
+      return false;
+    } catch (e) {
+      log("Error in checking wishlist status: ${e.toString()}");
+      return false;
+    }
+  }
+
   Stream<List<BidModel>> getBidsStream(String productId) {
     return FirebaseFirestore.instance
         .collection('bids')
@@ -70,7 +111,31 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _remainingTime =
+        calculateRemainingTime(widget.product.endDate, widget.product.endTime);
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {});
+    if (_remainingTime.isNegative) {
+      ended = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final days = _remainingTime.inDays.toString().padLeft(2, '0');
+    final hours =
+        _remainingTime.inHours.remainder(24).toString().padLeft(2, '0');
+    final minutes =
+        _remainingTime.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds =
+        _remainingTime.inSeconds.remainder(60).toString().padLeft(2, '0');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -154,13 +219,13 @@ class _ProductDetailState extends State<ProductDetail> {
                           width: 8,
                           height: 8,
                           decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: ended ? Colors.red : Colors.green,
                             shape: BoxShape.circle,
                           ),
                         ),
                         SizedBox(width: 8),
                         Text(
-                          "Active",
+                          ended ? "Ended" : "Active",
                           style:
                               smallNormal.copyWith(fontWeight: FontWeight.w600),
                         ),
@@ -168,19 +233,9 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                   ),
                   Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Time Remaining",
-                          style: smallImportant,
-                        ),
-                        SizedBox(height: 6),
-                        Text(
-                          "00:00:00", // Replace with your real-time value
-                          style: smallImportant.copyWith(color: Colors.red),
-                        ),
-                      ],
+                    child: TickerDown(
+                      endDate: widget.product.endDate,
+                      endTime: widget.product.endTime,
                     ),
                   ),
                 ],
@@ -478,60 +533,116 @@ class _ProductDetailState extends State<ProductDetail> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size(164, 50.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isInWishlist = !isInWishlist;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            Icon(
-                              isInWishlist
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              size: 20,
-                              color: isInWishlist ? Colors.red : Colors.black,
-                            ),
-                            const SizedBox(
-                                width: 8), // Add spacing between icon and text
-                            Text(
-                              isInWishlist ? "Wished" : "Wishlist",
-                              style: normalImportant.copyWith(
-                                color: isInWishlist ? Colors.red : Colors.black,
-                              ),
-                            ),
-                          ],
+                      Expanded(
+                        child: FutureBuilder(
+                          future: isWishlisted(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return CircularProgressIndicator();
+                            } else if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(164, 50.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  if (FirebaseAuth.instance.currentUser ==
+                                      null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                            "Please login to add to wishlist."),
+                                      ),
+                                    );
+                                    return;
+                                  } else {
+                                    if (isInWishlist) {
+                                      // code to remove the item from wishlist.
+                                    }
+                                    {
+                                      ProductListViewModel()
+                                          .addToWishlist(widget.product.id);
+                                      setState(() {
+                                        isInWishlist = !isInWishlist;
+                                      });
+                                    }
+                                  }
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      isInWishlist
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      size: 20,
+                                      color: isInWishlist
+                                          ? Colors.red
+                                          : Colors.black,
+                                    ),
+                                    const SizedBox(
+                                        width:
+                                            8), // Add spacing between icon and text
+                                    Text(
+                                      isInWishlist ? "Wished" : "Wishlist",
+                                      style: normalImportant.copyWith(
+                                        color: isInWishlist
+                                            ? Colors.red
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            } else {
+                              // Handle other connection states here
+                              return Container(); // or any other appropriate widget
+                            }
+                          },
                         ),
                       ),
-                      OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          minimumSize: const Size(164, 50.0),
-                          backgroundColor: primaryAccentColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(164, 50.0),
+                            backgroundColor: ended ||
+                                    FirebaseAuth.instance.currentUser == null
+                                ? Colors.grey
+                                : primaryAccentColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                            ),
                           ),
-                        ),
-                        onPressed: () async {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PlaceBid(
-                                        productUploadModel: widget.product,
-                                      )));
-                        },
-                        child: const Text(
-                          "Bid",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
+                          onPressed: () async {
+                            if (ended ||
+                                FirebaseAuth.instance.currentUser == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("This auction has ended."),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PlaceBid(
+                                            productUploadModel: widget.product,
+                                          )));
+                            }
+                          },
+                          child: const Text(
+                            "Bid",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),

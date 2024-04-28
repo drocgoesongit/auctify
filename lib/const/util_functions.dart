@@ -39,3 +39,23 @@ String getDateInDayMonthYearFormat(DateTime dateTime) {
   String year = dateTime.year.toString();
   return '$day-$month-$year';
 }
+
+Duration calculateRemainingTime(String endDateParam, String endTimeParam) {
+  String endDate = endDateParam;
+  String endTime = "$endTimeParam:00";
+
+  List<String> endDateParts = endDate.split("-");
+  List<String> endTimeParts = endTime.split(":");
+
+  int year = int.parse(endDateParts[0]);
+  int month = int.parse(endDateParts[1]);
+  int day = int.parse(endDateParts[2]);
+
+  int hour = int.parse(endTimeParts[0]);
+  int minute = int.parse(endTimeParts[1]);
+  int second = int.parse(endTimeParts[2]);
+
+  DateTime endParsedTime = DateTime(year, month, day, hour, minute, second);
+  final now = DateTime.now();
+  return endParsedTime.difference(now);
+}

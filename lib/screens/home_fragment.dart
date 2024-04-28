@@ -1,9 +1,9 @@
 import 'dart:developer';
-import 'dart:js_interop';
 import 'package:auctify/const/constants.dart';
 import 'package:auctify/models/product_model.dart';
 import 'package:auctify/screens/accept_portal_screen.dart';
 import 'package:auctify/screens/product_detail_screen.dart';
+import 'package:auctify/screens/product_list_screen.dart';
 import 'package:auctify/screens/track_order.dart';
 import 'package:auctify/screens/wishlist_screen.dart';
 import 'package:auctify/utils/product_list_tile.dart';
@@ -79,11 +79,6 @@ class _HomeFragmentState extends State<HomeFragment> {
                   SizedBox(
                     width: 16,
                   ),
-                  Icon(Icons.notifications_none_rounded),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Icon(Icons.shopping_cart_outlined),
                 ],
               ),
             ],
@@ -129,55 +124,28 @@ class _HomeFragmentState extends State<HomeFragment> {
               CarouselSlider(
                 items: [
                   Container(
-                    margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
                       image: const DecorationImage(
-                        image: NetworkImage(
-                            "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
+                        image: AssetImage("assets/images/slide_one.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
-                    width: 350,
-                    height: 180,
                   ),
                   Container(
-                    margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
                       image: const DecorationImage(
-                        image: NetworkImage(
-                            "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
+                        image: AssetImage("assets/images/slide_two.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
-                    width: 350,
-                    height: 180,
                   ),
                   Container(
-                    margin: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 0.5,
-                      ),
                       image: const DecorationImage(
-                        image: NetworkImage(
-                            "https://static.vecteezy.com/system/resources/previews/004/491/043/non_2x/auction-business-concept-for-web-banner-woman-bidding-in-online-auction-auctioneer-sells-art-painting-modern-person-scene-illustration-in-flat-cartoon-design-with-people-characters-vector.jpg"),
+                        image: AssetImage("assets/images/slide_three.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
-                    width: 350,
-                    height: 180,
                   ),
                 ],
                 options: CarouselOptions(
@@ -200,29 +168,49 @@ class _HomeFragmentState extends State<HomeFragment> {
                       style: normalImportant,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    child: const Text(
-                      "see all",
-                      style: smallNormal,
-                    ),
-                  ),
+                  // Container(
+                  //   padding: const EdgeInsets.all(20),
+                  //   child: const Text(
+                  //     "see all",
+                  //     style: smallNormal,
+                  //   ),
+                  // ),
                 ],
               ),
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(padding: EdgeInsets.only(left: 20)),
-                    CircleImageWithBorder(
-                      imageAsset: "assets/images/nike.png",
-                      name: "Sneakers",
+                    Center(child: Padding(padding: EdgeInsets.only(left: 20))),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductListScreen(
+                                      category: "Designer",
+                                    )));
+                      },
+                      child: CircleImageWithBorder(
+                        imageAsset: "assets/images/nike.png",
+                        name: "Sneakers",
+                      ),
                     ),
                     Padding(padding: EdgeInsets.only(left: 8)),
-                    CircleImageWithBorder(
-                      imageAsset: "assets/images/Mona_Lisa.png",
-                      name: "Automobiles",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductListScreen(
+                                      category: "Automobile",
+                                    )));
+                      },
+                      child: CircleImageWithBorder(
+                        imageAsset: "assets/images/Mona_Lisa.png",
+                        name: "Automobiles",
+                      ),
                     ),
                     Padding(padding: EdgeInsets.only(left: 8)),
                     CircleImageWithBorder(
@@ -230,19 +218,35 @@ class _HomeFragmentState extends State<HomeFragment> {
                       name: "Art",
                     ),
                     Padding(padding: EdgeInsets.only(left: 8)),
-                    CircleImageWithBorder(
-                      imageAsset: "assets/images/nike.png",
-                      name: "Real Estates",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductListScreen(
+                                      category: "RealEstate",
+                                    )));
+                      },
+                      child: CircleImageWithBorder(
+                        imageAsset: "assets/images/nike.png",
+                        name: "Real Estates",
+                      ),
                     ),
+
                     Padding(padding: EdgeInsets.only(left: 8)),
-                    CircleImageWithBorder(
-                      imageAsset: "assets/images/nike.png",
-                      name: "Nike",
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 8)),
-                    CircleImageWithBorder(
-                      imageAsset: "assets/images/nike.png",
-                      name: "Nike",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProductListScreen(
+                                      category: "ArtWork",
+                                    )));
+                      },
+                      child: CircleImageWithBorder(
+                        imageAsset: "assets/images/nike.png",
+                        name: "Nike",
+                      ),
                     ),
                     Padding(padding: EdgeInsets.only(left: 8)),
                     Padding(
@@ -313,6 +317,8 @@ class _HomeFragmentState extends State<HomeFragment> {
                   }
                 },
               ),
+
+              SizedBox(height: 60),
               // Usage
             ],
           ),

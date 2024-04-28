@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final listOfScreens = [
     HomeFragment(),
-    ProductListScreen(),
+    ProductListScreen(category: "all"),
     ProfileScreen(),
   ];
 

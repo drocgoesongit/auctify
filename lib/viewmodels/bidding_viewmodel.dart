@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 class BiddingBackend {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
   Future<bool> placeBid(
     BidModel bidModel,
     BuildContext context,
@@ -26,38 +25,32 @@ class BiddingBackend {
       log("starting to place a bid");
       List<BidModel> bidList = await getAllBids(bidModel.productId, context);
       if (bidList.isNotEmpty) {
-        if (bidModel.bidAmount > bidList.first.bidAmount) {
-          log("bid amount is higher than the last bid placed.");
-          // uploading into bid root node.
-          // uploading into product bids list.
-          // updating the current price of the product.
+        log("bid amount is higher than the last bid placed.");
+        // uploading into bid root node.
+        // uploading into product bids list.
+        // updating the current price of the product.
 
-          await _firestore
-              .collection("bids")
-              .doc(bidModel.bidId)
-              .set(bidModel.toJson());
+        await _firestore
+            .collection("bids")
+            .doc(bidModel.bidId)
+            .set(bidModel.toJson());
 
-          await _firestore
-              .collection("products")
-              .doc(bidModel.productId)
-              .update({"currentPrice": bidModel.bidAmount});
+        await _firestore
+            .collection("products")
+            .doc(bidModel.productId)
+            .update({"currentPrice": bidModel.bidAmount});
 
-          await _firestore
-              .collection("products")
-              .doc(bidModel.productId)
-              .collection("bids")
-              .doc(bidModel.bidId)
-              .set({
-            "bidId": bidModel.bidId,
-          });
-          await reorderBids(bidModel.productId);
-          Navigator.pop(context);
-          return true;
-        } else {
-          log("there is higher bid placed.");
-          Navigator.pop(context);
-          return false;
-        }
+        await _firestore
+            .collection("products")
+            .doc(bidModel.productId)
+            .collection("bids")
+            .doc(bidModel.bidId)
+            .set({
+          "bidId": bidModel.bidId,
+        });
+        await reorderBids(bidModel.productId);
+        Navigator.pop(context);
+        return true;
       } else {
         await _firestore
             .collection("bids")

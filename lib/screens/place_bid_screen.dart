@@ -321,9 +321,11 @@ class _PlaceBidState extends State<PlaceBid> {
                   onPressed: () async {
                     int minAmount = widget.productUploadModel.currentPrice +
                         widget.productUploadModel.increment;
-                    ;
+
+                    int minBidAmount = widget.productUploadModel.startPrice;
                     String bidId = generateRandomId();
-                    if (int.parse(bidAmount) > minAmount) {
+                    if (int.parse(bidAmount) > minAmount ||
+                        int.parse(bidAmount) > minBidAmount) {
                       BidModel bidModel = BidModel(
                         bidAmount: int.parse(bidAmount),
                         productId: widget.productUploadModel.id,
@@ -349,7 +351,7 @@ class _PlaceBidState extends State<PlaceBid> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
-                            "Bid amount should be greater than current bid amount",
+                            "Bid amount should be greater than current bid amount. Or Atleast greater than initial bid amount.",
                           ),
                         ),
                       );

@@ -7,22 +7,30 @@ import 'package:auctify/viewmodels/product_list_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class ProductListScreen extends StatefulWidget {
-  const ProductListScreen({super.key});
+  const ProductListScreen({super.key, required this.category});
+
+  final String category;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
 }
 
 class _ProductListScreenState extends State<ProductListScreen> {
-  // variables and all
+  String _searchQuery = "all";
+  String _category = "all";
+  TextEditingController _searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
+    _category = widget.category;
+    _searchController = TextEditingController();
   }
 
   Future<List<ProductUploadModel>> getProductListFromBackend(
-      BuildContext context) async {
-    return await ProductListViewModel().getProductList(context);
+      BuildContext context, String searchQuery, String category) async {
+    return await ProductListViewModel()
+        .getProductListWithSearchQueryAndCategory(
+            context, searchQuery, category);
   }
 
   @override
@@ -45,6 +53,12 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     Expanded(
                       child: TextFormField(
                         textAlign: TextAlign.start,
+                        controller: _searchController,
+                        onChanged: (value) {
+                          setState(() {
+                            _searchQuery = value; // Update search query
+                          });
+                        },
                         decoration: InputDecoration(
                             contentPadding:
                                 const EdgeInsets.symmetric(vertical: 10),
@@ -80,64 +94,75 @@ class _ProductListScreenState extends State<ProductListScreen> {
             //search suggestion
             Container(
               width: double.infinity,
-              child: Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Recent Searches",
-                      style: normalImportant,
-                    ),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    Row(
-                      children: [
-                        SearchSuggestionItem("Clock"),
-                        SearchSuggestionItem("gramphones"),
-                        SearchSuggestionItem("uniques"),
-                      ],
-                    ),
-                    // const SizedBox(
-                    //   height: 8,
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     SearchSuggestionItem("vintages"),
-                    //     SearchSuggestionItem("Exclusives"),
-                    //   ],
-                    // ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    const Text(
-                      "Trending Searches",
-                      style: normalImportant,
-                    ),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    Row(
-                      children: [
-                        SearchSuggestionItem("flora"),
-                        SearchSuggestionItem("Tucocoo Vintage Canvas"),
-                        SearchSuggestionItem("Notre"),
-                      ],
-                    ),
-                    // const SizedBox(
-                    //   height: 8,
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     SearchSuggestionItem("meganta flask"),
-                    //     SearchSuggestionItem("Antique metal flourish signs"),
-                    //   ],
-                    // ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Recent Searches",
+                    style: normalImportant,
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _searchQuery = "Classic";
+                            _searchController.text = "Classic";
+                          });
+                        },
+                        child: SearchSuggestionItem("Classic"),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _searchQuery = "Light";
+                          });
+                        },
+                        child: SearchSuggestionItem("Light"),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _searchQuery = "Vintage";
+                          });
+                        },
+                        child: SearchSuggestionItem("Vintage"),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  const Text(
+                    "Trending Searches",
+                    style: normalImportant,
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      SearchSuggestionItem("flora"),
+                      SearchSuggestionItem("Tucocoo Vintage Canvas"),
+                      SearchSuggestionItem("Notre"),
+                    ],
+                  ),
+                  // const SizedBox(
+                  //   height: 8,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     SearchSuggestionItem("meganta flask"),
+                  //     SearchSuggestionItem("Antique metal flourish signs"),
+                  //   ],
+                  // ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                ],
               ),
             ),
             const SizedBox(
@@ -146,7 +171,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
             // list of products
 
             FutureBuilder(
-              future: getProductListFromBackend(context),
+              future: getProductListFromBackend(
+                context,
+                _searchQuery!,
+                _category!,
+              ),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasData && snapshot.data != false) {
@@ -168,6 +197,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           child: ProductListTile(
                             image: productList[index].imageList[0],
                             pname: productList[index].name,
+                            endDate: productList[index].endDate.toString(),
                             price: productList[index].currentPrice.toString(),
                             time: productList[index].endTime.toString(),
                           ),
